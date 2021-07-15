@@ -91,12 +91,45 @@ test('Plant has function containsShoot()', () => {
   });
 });
 
+test(`containsShoot() returns true as expected with a newly sprouted Plant`, () => {
+  const plant = Plant();
+  const coords = createGrid(5, 6);
+  plant.setCoords(coords);
+  plant.sprout();
+
+  expect(plant.containsShoot('2,2')).toBe(true);
+});
+test(`containsShoot() returns false as expected with a newly sprouted Plant`, () => {
+  const plant = Plant();
+  const coords = createGrid(5, 6);
+  plant.setCoords(coords);
+  plant.sprout();
+
+  expect(plant.containsShoot('2,0')).toBe(false);
+});
+
 // containsRoot(coord)
 test('Plant has function containsRoot()', () => {
   const plant = Plant();
   expect(plant).toMatchObject({
     containsRoot: expect.any(Function),
   });
+});
+test(`containsRoot() returns true as expected with a newly sprouted Plant`, () => {
+  const plant = Plant();
+  const coords = createGrid(5, 6);
+  plant.setCoords(coords);
+  plant.sprout();
+
+  expect(plant.containsRoot('2,3')).toBe(true);
+});
+test(`containsRoot() returns false as expected with a newly sprouted Plant`, () => {
+  const plant = Plant();
+  const coords = createGrid(5, 6);
+  plant.setCoords(coords);
+  plant.sprout();
+
+  expect(plant.containsRoot('2,0')).toBe(false);
 });
 
 // growShoots()

@@ -12,10 +12,10 @@ const Plant = () => {
 
   // contains functions
   const containsShoot = (coord) => {
-    return true;
+    return coords[coord] === 'shoot';
   }
   const containsRoot = (coord) => {
-    return true;
+    return coords[coord] === 'root';
   }
 
   // sprout!
