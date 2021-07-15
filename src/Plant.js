@@ -1,3 +1,5 @@
+import { findMidpoint } from "./helpers";
+
 const Plant = () => {
   let coords = {};
   const setCoords = (newCoords) => {
@@ -20,8 +22,10 @@ const Plant = () => {
   // make two growing tips: one shoot and one root
   // two pixels at the middle of the grid
   const sprout = () => {
-    coords['0,0'] = 'shoot';
-    coords['1,1'] = 'root';
+    const shootStartCoord = findMidpoint(Object.keys(coords), 'shoot');
+    const rootStartCoord = findMidpoint(Object.keys(coords), 'root');
+    coords[shootStartCoord] = 'shoot';
+    coords[rootStartCoord] = 'root';
   }
 
   // user growth actions

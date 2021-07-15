@@ -69,6 +69,20 @@ test(`sprout() creates one shoot cell and one root cell`, () => {
   expect(numRootCells).toBe(1);
 });
 
+test(`sprout() creates one shoot cell in the upper-center cell and one root cell in the lower-center cell`, () => {
+  const plant = Plant();
+  const coords = createGrid(5, 6);
+  plant.setCoords(coords);
+
+  plant.sprout();
+
+  expect(plant.coords).toMatchObject({
+    '2,2': 'shoot',
+    '2,3': 'root',
+  });
+  
+});
+
 // containsShoot(coord)
 test('Plant has function containsShoot()', () => {
   const plant = Plant();
