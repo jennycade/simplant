@@ -1,4 +1,5 @@
 import Plant from './Plant';
+import { createGrid } from './helpers';
 
 // setCoords(coords)
 test('Plant has function setCoords(coords)', () => {
@@ -6,6 +7,12 @@ test('Plant has function setCoords(coords)', () => {
   expect(plant).toMatchObject({
     setCoords: expect.any(Function),
   });
+});
+
+test(`setCoords() takes an array of coordinates`, () => {
+  const plant = Plant();
+  const coords = createGrid(10,10);
+  plant.setCoords(coords); // no error is good enough for this test
 });
 
 // containsShoot(coord)
