@@ -37,6 +37,38 @@ test(`setCoords() makes all coords empty`, () => {
   expect(plant.coords).toEqual(grid);
 });
 
+// sprout()
+test(`Plant has function sprout()`, () => {
+  const plant = Plant();
+  expect(plant).toMatchObject({
+    sprout: expect.any(Function),
+  });
+});
+
+test(`sprout() creates one shoot cell and one root cell`, () => {
+  const plant = Plant();
+  const coords = createGrid(5, 6);
+  plant.setCoords(coords);
+
+  plant.sprout();
+
+  let numShootCells = 0;
+  let numRootCells = 0;
+
+  // count the occupied coordinates
+  for (const [coord, val] of Object.entries(plant.coords)) {
+    if (val === 'shoot') {
+      numShootCells++;
+    }
+    if (val === 'root') {
+      numRootCells++;
+    }
+  }
+
+  expect(numShootCells).toBe(1);
+  expect(numRootCells).toBe(1);
+});
+
 // containsShoot(coord)
 test('Plant has function containsShoot()', () => {
   const plant = Plant();

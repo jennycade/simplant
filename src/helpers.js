@@ -1,3 +1,4 @@
+// TODO: Refactor with Grid() as its own module
 const createGrid = (width, height) => {
   let grid = [];
 
@@ -7,9 +8,34 @@ const createGrid = (width, height) => {
       grid.push(coord);
     }
   }
-
-
   return grid; // ['0,0', '0,1', '0,2', ..., 'width,height']
 }
 
-export { createGrid }
+const findMidpoint = (coords, type) => {
+  // last coord in array = max x, max y
+  const [xmax, ymax] = parseCoord(coords[coords.length - 1]);
+  // console.log(`Dimensions: ${xmax}, ${ymax}`);
+
+  // find mid x coord
+  const xmid = Math.floor(xmax / 2);
+
+  // find mid y coord
+  let ymid = Math.floor(ymax / 2);
+  if (type === 'root') {
+    ymid ++;
+  }
+
+  return `${xmid},${ymid}`;
+  
+}
+
+const parseCoord = (coord) => {
+  const coords = coord.split(',');
+  return coords.map(x => parseInt(x));
+}
+
+export {
+  createGrid,
+  findMidpoint,
+  parseCoord,
+};

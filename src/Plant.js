@@ -8,6 +8,7 @@ const Plant = () => {
     }
   }
 
+  // contains functions
   const containsShoot = (coord) => {
     return true;
   }
@@ -15,7 +16,15 @@ const Plant = () => {
     return true;
   }
 
-  // growth actions
+  // sprout!
+  // make two growing tips: one shoot and one root
+  // two pixels at the middle of the grid
+  const sprout = () => {
+    coords['0,0'] = 'shoot';
+    coords['1,1'] = 'root';
+  }
+
+  // user growth actions
   const growShoots = () => {
 
   }
@@ -33,6 +42,7 @@ const Plant = () => {
   return {
     coords,
     setCoords,
+    sprout,
     containsShoot,
     containsRoot,
     growShoots, growRoots,
