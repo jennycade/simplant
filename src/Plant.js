@@ -1,8 +1,11 @@
 const Plant = () => {
-  let coords;
-  const setCoords = (coords) => {
-    // takes an array of coord keys
+  let coords = {};
+  const setCoords = (newCoords) => {
+    // takes an array of coord strings, uses that as keys
     // sets coords to be an object with coord keys and 'shoot', 'root', or 'empty'
+    for (let i = 0; i < newCoords.length; i++) {
+      coords[newCoords[i]] = '';
+    }
   }
 
   const containsShoot = (coord) => {
@@ -28,6 +31,7 @@ const Plant = () => {
   const bloom = () => {}
 
   return {
+    coords,
     setCoords,
     containsShoot,
     containsRoot,

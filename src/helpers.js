@@ -9,7 +9,7 @@ const createGrid = (width, height) => {
   }
 
 
-  return grid;
+  return grid; // ['0,0', '0,1', '0,2', ..., 'width,height']
 }
 
 export { createGrid }
