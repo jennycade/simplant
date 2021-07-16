@@ -1,7 +1,10 @@
+import GrowingTip from "./GrowingTip";
 import { findMidpoint } from "./helpers";
 
 const Plant = () => {
   let coords = {};
+  let growingTips = [];
+
   const setCoords = (newCoords) => {
     // takes an array of coord strings, uses that as keys
     // sets coords to be an object with coord keys and 'shoot', 'root', or 'empty'
@@ -24,16 +27,42 @@ const Plant = () => {
   const sprout = () => {
     const shootStartCoord = findMidpoint(Object.keys(coords), 'shoot');
     const rootStartCoord = findMidpoint(Object.keys(coords), 'root');
+
+    // growing tips
+    const shootMeristem = GrowingTip(shootStartCoord, 'u');
+    const rootMeristem = GrowingTip(rootStartCoord, 'd');
+    growingTips = [shootMeristem, rootMeristem];
+
     coords[shootStartCoord] = 'shoot';
     coords[rootStartCoord] = 'root';
   }
 
   // user growth actions
-  const growShoots = () => {
+  const grow = (plantPart) => {
+    let checkFn;
+    if (plantPart === 'shoot') {
+      checkFn = 'isShoot';
+    }
+    if (plantPart === 'root') {
+      checkFn = 'isRoot';
+    }
 
+    // iterate over the growing tips
+    for (let i = 0; i < growingTips.length; i++) {
+      if (growingTips[i][checkFn]()) {
+        // grow
+        const newCoord = growingTips[i].grow();
+        // add new coord to the plant
+        coords[newCoord] = plantPart;
+      }
+    }
+  }
+
+  const growShoots = () => {
+    grow('shoot');
   }
   const growRoots = () => {
-
+    grow('root');
   }
   const newShoot = () => {
 
@@ -42,6 +71,31 @@ const Plant = () => {
 
   }
   const bloom = () => {}
+
+  // for dev: count cells
+  const countCells = (type) => {
+    let numShootCells = 0;
+    let numRootCells = 0;
+
+    // count the occupied coordinates
+    for (const [coord, val] of Object.entries(coords)) {
+      if (val === 'shoot') {
+        numShootCells++;
+      }
+      if (val === 'root') {
+        numRootCells++;
+      }
+    }
+
+    if (type === 'shoot') {
+      return numShootCells;
+    } else if (type === 'root') {
+      return numRootCells;
+    } else {
+      return numShootCells + numRootCells;
+    }
+    
+  }
 
   return {
     coords,
@@ -52,6 +106,8 @@ const Plant = () => {
     growShoots, growRoots,
     newShoot, newRoot,
     bloom,
+
+    countCells,
   };
 }
 

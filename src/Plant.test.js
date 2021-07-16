@@ -52,18 +52,8 @@ test(`sprout() creates one shoot cell and one root cell`, () => {
 
   plant.sprout();
 
-  let numShootCells = 0;
-  let numRootCells = 0;
-
-  // count the occupied coordinates
-  for (const [coord, val] of Object.entries(plant.coords)) {
-    if (val === 'shoot') {
-      numShootCells++;
-    }
-    if (val === 'root') {
-      numRootCells++;
-    }
-  }
+  const numShootCells = plant.countCells('shoot');
+  const numRootCells = plant.countCells('root');
 
   expect(numShootCells).toBe(1);
   expect(numRootCells).toBe(1);
@@ -140,12 +130,40 @@ test(`Plant has function growShoots()`, () => {
   });
 });
 
+test(`Calling growShoots() on a new plant creates a second shoot cell`, () => {
+  const plant = Plant();
+  const coords = createGrid(5, 6);
+  plant.setCoords(coords);
+
+  plant.sprout();
+  plant.growShoots();
+
+  const numShootCells = plant.countCells('shoot');
+
+  expect(numShootCells).toBe(2);
+});
+
+// test(`Calling growShoots() on a plant with two shoot tips creates two new shoot cells`)
+
 // growRoots()
 test(`Plant has function growRoots()`, () => {
   const plant = Plant();
   expect(plant).toMatchObject({
     growRoots: expect.any(Function),
   });
+});
+
+test(`Calling growRoots() on a new plant creates a second root cell`, () => {
+  const plant = Plant();
+  const coords = createGrid(5, 6);
+  plant.setCoords(coords);
+
+  plant.sprout();
+  plant.growRoots();
+
+  const numRootCells = plant.countCells('root');
+
+  expect(numRootCells).toBe(2);
 });
 
 // newShoot()
@@ -169,5 +187,13 @@ test(`Plant has function bloom()`, () => {
   const plant = Plant();
   expect(plant).toMatchObject({
     bloom: expect.any(Function),
+  });
+});
+
+// for dev: count cells
+test(`Plant has function countCells()`, () => {
+  const plant = Plant();
+  expect(plant).toMatchObject({
+    countCells: expect.any(Function),
   });
 });
