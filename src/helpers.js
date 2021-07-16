@@ -25,7 +25,7 @@ const findMidpoint = (coords, type) => {
     ymid ++;
   }
 
-  return `${xmid},${ymid}`;
+  return unparseCoord(xmid, ymid);
   
 }
 
@@ -33,9 +33,12 @@ const parseCoord = (coord) => {
   const coords = coord.split(',');
   return coords.map(x => parseInt(x));
 }
+const unparseCoord = (x, y) => {
+  return `${x},${y}`;
+}
 
 export {
   createGrid,
   findMidpoint,
-  parseCoord,
+  parseCoord, unparseCoord,
 };
