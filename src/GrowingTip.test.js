@@ -1,5 +1,29 @@
 import GrowingTip from './GrowingTip';
 
+// getOrigin()
+test(`GrowingTip has function getOrigin()`, () => {
+  const tip = GrowingTip('0,0', 'u');
+  expect(tip).toMatchObject({
+    getOrigin: expect.any(Function),
+  });
+});
+
+test(`getOrigin() returns the starting coordinate`, () => {
+  const tip = GrowingTip('2,2', 'u');
+  const origin = tip.getOrigin();
+
+  expect(origin).toBe('2,2');
+});
+
+test(`getOrigin() returns the starting coordinate even after the tip grows`, () => {
+  const tip = GrowingTip('2,2', 'u');
+  tip.grow();
+
+  const origin = tip.getOrigin();
+
+  expect(origin).toBe('2,2');
+});
+
 // isShoot
 test(`GrowingTip has function isShoot()`, () => {
   const tip = GrowingTip('0,0', 'u');

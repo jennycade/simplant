@@ -97,6 +97,11 @@ const Plant = () => {
     
   }
 
+  // also (probably) for dev: toString()
+  const toString = () => {
+
+  }
+
   return {
     coords,
     setCoords,
@@ -108,6 +113,7 @@ const Plant = () => {
     bloom,
 
     countCells,
+    toString,
   };
 }
 

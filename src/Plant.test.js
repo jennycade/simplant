@@ -174,6 +174,8 @@ test(`Plant has function newShoot()`, () => {
   });
 });
 
+// test(`newShoot() creates a new GrowingTip`)
+
 // newRoot()
 test(`Plant has function newRoot()`, () => {
   const plant = Plant();
@@ -195,5 +197,13 @@ test(`Plant has function countCells()`, () => {
   const plant = Plant();
   expect(plant).toMatchObject({
     countCells: expect.any(Function),
+  });
+});
+
+// for dev: toString
+test(`Plant has function toString()`, () => {
+  const plant = Plant();
+  expect(plant).toMatchObject({
+    toString: expect.any(Function),
   });
 });

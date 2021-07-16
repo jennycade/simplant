@@ -2,6 +2,12 @@ import { parseCoord, unparseCoord } from "./helpers";
 
 const GrowingTip = (coord, dir) => {
 
+  const origin = coord;
+
+  const getOrigin = () => {
+    return origin;
+  }
+
   const isShoot = () => {
     return dir.includes('u');
   }
@@ -35,6 +41,7 @@ const GrowingTip = (coord, dir) => {
   }
 
   return {
+    getOrigin,
     isShoot, isRoot,
     grow,
   };
