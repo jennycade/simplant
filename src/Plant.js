@@ -1,8 +1,9 @@
 import GrowingTip from "./GrowingTip";
-import { findMidpoint, parseCoord, unparseCoord } from "./helpers";
+import { findMidline, findMidpoint, parseCoord, unparseCoord } from "./helpers";
 
 const Plant = () => {
   let coords = {};
+  let midline;
   let growingTips = [];
   let usedOrigins = [];
 
@@ -12,6 +13,7 @@ const Plant = () => {
     for (let i = 0; i < newCoords.length; i++) {
       coords[newCoords[i]] = '';
     }
+    midline = findMidline(newCoords);
   }
 
   // contains functions
@@ -65,7 +67,31 @@ const Plant = () => {
   const growRoots = () => {
     grow('root');
   }
+
+  const newTip = (plantPart) => {
+    // TODO: refactor newShoot() here to use for newRoot() too
+  }
+
   const newShoot = () => {
+    // pick an origin
+    const coordsArr = Object.keys(coords);
+    const potentialOrigins = coordsArr.flatMap(coord => {
+      let result = '';
+      // coord is on midline; xcoord === midline
+      const [x, y] = parseCoord(coord);
+      if (x === midline) {
+        if (coords[coord] === 'shoot') {
+          let str = `${coord}u`;
+          result = [str+'l', str+'r'];
+        }
+      }
+      // add u for shoot and r for root
+      // add l
+      // add r
+      return result;
+    });
+
+    console.log(potentialOrigins);
 
   }
   const newRoot = () => {
