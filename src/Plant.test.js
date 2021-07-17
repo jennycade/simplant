@@ -143,6 +143,25 @@ test(`Calling growShoots() on a new plant creates a second shoot cell`, () => {
   expect(numShootCells).toBe(2);
 });
 
+test(`Calling growShoots() on a new plant makes a new cell directly above the new plant`, () => {
+  const plant = Plant();
+  const coords = createGrid(5, 6);
+  plant.setCoords(coords);
+
+  plant.sprout();
+  plant.growShoots();
+
+  let str = '';
+  str += '-----\n';
+  str += '--s--\n';
+  str += '--s--\n';
+  str += '--r--\n';
+  str += '-----\n';
+  str += '-----\n';
+
+  expect(plant.toString()).toBe(str);
+});
+
 // test(`Calling growShoots() on a plant with two shoot tips creates two new shoot cells`)
 
 // growRoots()
@@ -164,6 +183,25 @@ test(`Calling growRoots() on a new plant creates a second root cell`, () => {
   const numRootCells = plant.countCells('root');
 
   expect(numRootCells).toBe(2);
+});
+
+test(`Calling growRoots() on a new plant makes a new cell directly below the new plant`, () => {
+  const plant = Plant();
+  const coords = createGrid(5, 6);
+  plant.setCoords(coords);
+
+  plant.sprout();
+  plant.growRoots();
+
+  let str = '';
+  str += '-----\n';
+  str += '-----\n';
+  str += '--s--\n';
+  str += '--r--\n';
+  str += '--r--\n';
+  str += '-----\n';
+
+  expect(plant.toString()).toBe(str);
 });
 
 // newShoot()
