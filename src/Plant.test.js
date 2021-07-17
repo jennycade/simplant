@@ -223,7 +223,7 @@ test(`Calling newShoot() and then growShoots() on a new plant creates two new sh
 
   console.log(plant.toString());
 
-  // expect(numShootCells).toBe(3);
+  expect(numShootCells).toBe(3);
 });
 
 // newRoot()

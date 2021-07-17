@@ -75,23 +75,42 @@ const Plant = () => {
   const newShoot = () => {
     // pick an origin
     const coordsArr = Object.keys(coords);
-    const potentialOrigins = coordsArr.flatMap(coord => {
+    let potentialOrigins = coordsArr.flatMap(coord => {
       let result = '';
       // coord is on midline; xcoord === midline
       const [x, y] = parseCoord(coord);
       if (x === midline) {
         if (coords[coord] === 'shoot') {
-          let str = `${coord}u`;
-          result = [str+'l', str+'r'];
+          let str = `${coord}u`; // add u for shoot and r for root
+          result = [str+'l', str+'r']; // add l and r for our beautiful 2D plant
         }
       }
-      // add u for shoot and r for root
-      // add l
-      // add r
       return result;
     });
 
+    potentialOrigins = potentialOrigins.filter(x => x !== '');
+
     console.log(potentialOrigins);
+
+    // subtract usedOrigins from potentialOrigins
+    const availableOrigins = potentialOrigins.filter(x => !usedOrigins.includes(x));
+
+    // choose an origin randomly
+    const origin = availableOrigins[Math.floor(Math.random() * availableOrigins.length)];
+
+    // make a new GrowingTip()
+
+    // parse the origin: 'x,yul'
+    // TODO: consider writing a parseOriginCode() function (But this might be the only place it gets used)
+    const coord = origin.substring(0, origin.length - 2);
+    const dir = origin.substring(origin.length - 2);
+
+    // add to growing tips
+    const newTip = GrowingTip(coord, dir);
+    growingTips.push(newTip);
+
+    // add origin to usedOrigins
+    usedOrigins.push(origin);
 
   }
   const newRoot = () => {
