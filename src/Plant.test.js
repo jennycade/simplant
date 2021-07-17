@@ -162,8 +162,6 @@ test(`Calling growShoots() on a new plant makes a new cell directly above the ne
   expect(plant.toString()).toBe(str);
 });
 
-// test(`Calling growShoots() on a plant with two shoot tips creates two new shoot cells`)
-
 // growRoots()
 test(`Plant has function growRoots()`, () => {
   const plant = Plant();
@@ -212,7 +210,21 @@ test(`Plant has function newShoot()`, () => {
   });
 });
 
-// test(`newShoot() creates a new GrowingTip`)
+test(`Calling newShoot() and then growShoots() on a new plant creates two new shoot cells`, () => {
+  const plant = Plant();
+  const coords = createGrid(5, 6);
+  plant.setCoords(coords);
+
+  plant.sprout();
+  plant.newShoot();
+  plant.growShoots();
+
+  const numShootCells = plant.countCells('shoot');
+
+  console.log(plant.toString());
+
+  // expect(numShootCells).toBe(3);
+});
 
 // newRoot()
 test(`Plant has function newRoot()`, () => {

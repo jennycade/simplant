@@ -11,9 +11,13 @@ const createGrid = (width, height) => {
   return grid; // ['0,0', '1,0', '2,0', ..., 'width,height']
 }
 
+const findMaxCoord = (coords) => {
+  return parseCoord(coords[coords.length - 1]);
+}
+
 const findMidpoint = (coords, type) => {
   // last coord in array = max x, max y
-  const [xmax, ymax] = parseCoord(coords[coords.length - 1]);
+  const [xmax, ymax] = findMaxCoord(coords);
   // console.log(`Dimensions: ${xmax}, ${ymax}`);
 
   // find mid x coord
@@ -29,6 +33,11 @@ const findMidpoint = (coords, type) => {
   
 }
 
+const findMidline = (coords) => {
+  const [xmax, ymax] = findMaxCoord(coords);
+  return Math.floor(xmax / 2);
+}
+
 const parseCoord = (coord) => {
   const coords = coord.split(',');
   return coords.map(x => parseInt(x));
@@ -39,6 +48,6 @@ const unparseCoord = (x, y) => {
 
 export {
   createGrid,
-  findMidpoint,
+  findMidpoint, findMidline,
   parseCoord, unparseCoord,
 };

@@ -4,6 +4,7 @@ import { findMidpoint, parseCoord, unparseCoord } from "./helpers";
 const Plant = () => {
   let coords = {};
   let growingTips = [];
+  let usedOrigins = [];
 
   const setCoords = (newCoords) => {
     // takes an array of coord strings, uses that as keys
