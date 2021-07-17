@@ -207,3 +207,23 @@ test(`Plant has function toString()`, () => {
     toString: expect.any(Function),
   });
 });
+
+test(`toString() returns a string`, () => {
+  const plant = Plant();
+  plant.setCoords(createGrid(5,5));
+  expect(plant.toString()).toEqual(expect.any(String));
+});
+
+test(`toString() properly stringifies an unsprouted plant`, () => {
+  let str = '';
+  str += '-----\n';
+  str += '-----\n';
+  str += '-----\n';
+  str += '-----\n';
+  str += '-----\n';
+
+  const plant = Plant();
+  plant.setCoords(createGrid(5,5));
+
+  expect(plant.toString()).toBe(str);
+});

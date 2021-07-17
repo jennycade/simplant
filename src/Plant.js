@@ -1,5 +1,5 @@
 import GrowingTip from "./GrowingTip";
-import { findMidpoint } from "./helpers";
+import { findMidpoint, parseCoord, unparseCoord } from "./helpers";
 
 const Plant = () => {
   let coords = {};
@@ -99,7 +99,31 @@ const Plant = () => {
 
   // also (probably) for dev: toString()
   const toString = () => {
+    let str = '';
+    // coords = {'0,0': '', '1,0': '', ..., 'xmax,ymax': ''}
+    // parse last coord
+    const coordsArr = Object.keys(coords);
+    const lastCoord = coordsArr[coordsArr.length - 1];
+    const [xmax, ymax] = parseCoord(lastCoord);
 
+    // iterate row-by-row
+    for (let y = 0; y < ymax + 1; y++) {
+      for (let x = 0; x < xmax + 1; x++) {
+        const status = coords[unparseCoord(x, y)]
+        let code = '';
+
+        if (status === '') {
+          code = '-';
+        } else {
+          // first character
+          code = status.substring(0, 1);
+        }
+
+        str += code;
+      }
+      str += '\n';
+    }
+    return str;
   }
 
   return {
