@@ -3,9 +3,15 @@ import { findMidline, findMidpoint, parseCoord, unparseCoord } from "./helpers";
 
 const Plant = () => {
   let coords = {};
+
+  // for new shoots and roots
   let midline;
   let growingTips = [];
   let usedOrigins = [];
+
+  // for flowers
+  let flowers = [];
+  let usedFlowerCoords = [];
 
   const setCoords = (newCoords) => {
     // takes an array of coord strings, uses that as keys
@@ -127,7 +133,28 @@ const Plant = () => {
   const newRoot = () => {
     return newTip('root');
   }
-  const bloom = () => {}
+  const bloom = () => {
+    // pick a shoot cell to convert to a flower
+    const availableFlowerCoords = [];
+
+    for (const [coord, val] of Object.entries(coords)) {
+      if ( !usedFlowerCoords.includes(coord) && val === 'shoot' ) {
+        availableFlowerCoords.push(coord);
+      }
+    }
+
+    const flowerCoord = availableFlowerCoords[Math.floor(Math.random() * availableFlowerCoords.length)];
+
+    // make new Flower()
+
+    // update coords
+    coords[flowerCoord] = 'flower';
+
+    // add to usedFlowerCoords
+    usedFlowerCoords.push(flowerCoord);
+
+    return true;
+  }
 
   // for dev: count cells
   const countCells = (type) => {

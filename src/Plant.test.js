@@ -402,6 +402,17 @@ test(`Plant has function bloom()`, () => {
   });
 });
 
+test(`Successful call to bloom() returns true`, () => {
+  const plant = Plant();
+  const coords = createGrid(5,6);
+  plant.setCoords(coords);
+
+  plant.sprout();
+  const result = plant.bloom();
+
+  expect(result).toBe(true);
+});
+
 test(`When bloom() is called, one shoot cell switches to a flower cell`, () => {
   const plant = Plant();
   const coords = createGrid(5,6);
@@ -409,6 +420,8 @@ test(`When bloom() is called, one shoot cell switches to a flower cell`, () => {
 
   plant.sprout();
   plant.bloom();
+
+  console.log(plant.toString());
 
   const numFlowerCells = plant.countCells('flower');
 
