@@ -133,6 +133,7 @@ const Plant = () => {
   const countCells = (type) => {
     let numShootCells = 0;
     let numRootCells = 0;
+    let numFlowerCells = 0;
 
     // count the occupied coordinates
     for (const [coord, val] of Object.entries(coords)) {
@@ -142,14 +143,19 @@ const Plant = () => {
       if (val === 'root') {
         numRootCells++;
       }
+      if (val === 'flower') {
+        numFlowerCells++;
+      }
     }
 
     if (type === 'shoot') {
       return numShootCells;
     } else if (type === 'root') {
       return numRootCells;
+    } else if (type === 'flower') {
+      return numFlowerCells;
     } else {
-      return numShootCells + numRootCells;
+      return numShootCells + numRootCells + numFlowerCells;
     }
     
   }

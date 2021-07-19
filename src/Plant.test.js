@@ -402,6 +402,19 @@ test(`Plant has function bloom()`, () => {
   });
 });
 
+test(`When bloom() is called, one shoot cell switches to a flower cell`, () => {
+  const plant = Plant();
+  const coords = createGrid(5,6);
+  plant.setCoords(coords);
+
+  plant.sprout();
+  plant.bloom();
+
+  const numFlowerCells = plant.countCells('flower');
+
+  expect(numFlowerCells).toBe(1);
+});
+
 // for dev: count cells
 test(`Plant has function countCells()`, () => {
   const plant = Plant();
@@ -437,3 +450,6 @@ test(`toString() properly stringifies an unsprouted plant`, () => {
 
   expect(plant.toString()).toBe(str);
 });
+
+
+// TODO: Write tests for when plant growth goes off the board
