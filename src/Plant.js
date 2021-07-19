@@ -69,10 +69,14 @@ const Plant = () => {
   }
 
   const newTip = (plantPart) => {
-    // TODO: refactor newShoot() here to use for newRoot() too
-  }
-
-  const newShoot = () => {
+    let ydir = '';
+    // encode y direction
+    if (plantPart === 'shoot') {
+      ydir = 'u';
+    }
+    if (plantPart === 'root') {
+      ydir = 'd';
+    }
     // pick an origin
     const coordsArr = Object.keys(coords);
     let potentialOrigins = coordsArr.flatMap(coord => {
@@ -80,8 +84,8 @@ const Plant = () => {
       // coord is on midline; xcoord === midline
       const [x, y] = parseCoord(coord);
       if (x === midline) {
-        if (coords[coord] === 'shoot') {
-          let str = `${coord}u`; // add u for shoot and r for root
+        if (coords[coord] === plantPart) {
+          let str = `${coord}${ydir}`; // add u for shoot and r for root
           result = [str+'l', str+'r']; // add l and r for our beautiful 2D plant
         }
       }
@@ -89,8 +93,6 @@ const Plant = () => {
     });
 
     potentialOrigins = potentialOrigins.filter(x => x !== '');
-
-    console.log(potentialOrigins);
 
     // subtract usedOrigins from potentialOrigins
     const availableOrigins = potentialOrigins.filter(x => !usedOrigins.includes(x));
@@ -113,8 +115,12 @@ const Plant = () => {
     usedOrigins.push(origin);
 
   }
-  const newRoot = () => {
 
+  const newShoot = () => {
+    newTip('shoot');
+  }
+  const newRoot = () => {
+    newTip('root');
   }
   const bloom = () => {}
 
