@@ -1,13 +1,5 @@
 import Flower from './Flower';
 
-//////////// setTime() ----- for dev only?
-test(`Flower has function setTime()`, () => {
-  const flower = Flower();
-  expect(flower).toMatchObject({
-    setTime: expect.any(Function),
-  });
-});
-
 //////////// incTime()
 test(`Flower has function incTime()`, () => {
   const flower = Flower();
@@ -31,7 +23,22 @@ test(`The stage of a new flower is 'bud'`, () => {
   expect(stage).toBe('bud');
 });
 
-///////////// verb()
+///////////// getNextVerb()
+test(`Flower has function getNextVerb()`, () => {
+  const flower = Flower();
+  expect(flower).toMatchObject({
+    getNextVerb: expect.any(Function),
+  });
+});
+
+test(`The next verb for a new flower is 'blossom'`, () => {
+  const flower = Flower();
+  const nextVerb = flower.getNextVerb();
+
+  expect(nextVerb).toBe('blossom');
+});
+
+///////////// doVerb()
 test(`Flower has function doVerb(verb)`, () => {
   const flower = Flower();
   expect(flower).toMatchObject({
