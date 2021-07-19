@@ -162,6 +162,19 @@ test(`Calling growShoots() on a new plant makes a new cell directly above the ne
   expect(plant.toString()).toBe(str);
 });
 
+test(`Calling growShoots() doesn't affect the number of root cells`, () => {
+  const plant = Plant();
+  const coords = createGrid(5, 6);
+  plant.setCoords(coords);
+
+  plant.sprout();
+  plant.growShoots();
+
+  const numRootCells = plant.countCells('root');
+
+  expect(numRootCells).toBe(1);
+});
+
 // growRoots()
 test(`Plant has function growRoots()`, () => {
   const plant = Plant();
@@ -200,6 +213,19 @@ test(`Calling growRoots() on a new plant makes a new cell directly below the new
   str += '-----\n';
 
   expect(plant.toString()).toBe(str);
+});
+
+test(`Calling growRoots() doesn't affect the number of shoot cells`, () => {
+  const plant = Plant();
+  const coords = createGrid(5, 6);
+  plant.setCoords(coords);
+
+  plant.sprout();
+  plant.growRoots();
+
+  const numShootCells = plant.countCells('shoot');
+
+  expect(numShootCells).toBe(1);
 });
 
 // newShoot()
@@ -244,6 +270,20 @@ test(`Calling newShoot() and then growShoots() twice on a new plant creates six 
   expect(numShootCells).toBe(6);
 });
 
+test(`Calling newShoot() and then growShoots() doesn't affect the number of root cells`, () => {
+  const plant = Plant();
+  const coords = createGrid(5, 6);
+  plant.setCoords(coords);
+
+  plant.sprout();
+  plant.newShoot();
+  plant.growShoots();
+
+  const numRootCells = plant.countCells('root');
+
+  expect(numRootCells).toBe(1);
+});
+
 // newRoot()
 test(`Plant has function newRoot()`, () => {
   const plant = Plant();
@@ -281,12 +321,24 @@ test(`Calling newRoot() and then growRoots() twice on a new plant creates six sh
 
   const numRootCells = plant.countCells('root');
 
-  console.log(plant.toString());
+  // console.log(plant.toString());
 
   expect(numRootCells).toBe(6);
 });
 
-// test(`Calling growRoots() doesn't affect the number of shoot cells`)
+test(`Calling newRoot() and then growRoots() doesn't affect the number of shoot cells`, () => {
+  const plant = Plant();
+  const coords = createGrid(5, 6);
+  plant.setCoords(coords);
+
+  plant.sprout();
+  plant.newRoot();
+  plant.growRoots();
+
+  const numShootCells = plant.countCells('shoot');
+
+  expect(numShootCells).toBe(1);
+});
 
 // bloom()
 test(`Plant has function bloom()`, () => {
