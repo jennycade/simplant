@@ -38,7 +38,7 @@ const findMidline = (coords) => {
   return Math.floor(xmax / 2);
 }
 
-const parseCoord = (coord) => {
+const parseCoord = (coord) => { // TODO: Write some error-catching here. If plant.sprout() is called before plant.setCoords(), this function is called with coord = undefined.
   const coords = coord.split(',');
   return coords.map(x => parseInt(x));
 }

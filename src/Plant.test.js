@@ -73,6 +73,16 @@ test(`sprout() creates one shoot cell in the upper-center cell and one root cell
   
 });
 
+test(`Successful call to sprout() returns true`, () => {
+  const plant = Plant();
+  const coords = createGrid(5, 6);
+  plant.setCoords(coords);
+  
+  const result = plant.sprout();
+
+  expect(result).toBe(true);
+});
+
 // containsShoot(coord)
 test('Plant has function containsShoot()', () => {
   const plant = Plant();
@@ -175,6 +185,17 @@ test(`Calling growShoots() doesn't affect the number of root cells`, () => {
   expect(numRootCells).toBe(1);
 });
 
+test(`A successful call to growShoots() returns true`, () => {
+  const plant = Plant();
+  const coords = createGrid(5, 6);
+  plant.setCoords(coords);
+
+  plant.sprout();
+  const result = plant.growShoots();
+
+  expect(result).toBe(true);
+});
+
 // growRoots()
 test(`Plant has function growRoots()`, () => {
   const plant = Plant();
@@ -226,6 +247,17 @@ test(`Calling growRoots() doesn't affect the number of shoot cells`, () => {
   const numShootCells = plant.countCells('shoot');
 
   expect(numShootCells).toBe(1);
+});
+
+test(`A successful call to growRoots() returns true`, () => {
+  const plant = Plant();
+  const coords = createGrid(5, 6);
+  plant.setCoords(coords);
+
+  plant.sprout();
+  const result = plant.growRoots();
+
+  expect(result).toBe(true);
 });
 
 // newShoot()
@@ -284,6 +316,17 @@ test(`Calling newShoot() and then growShoots() doesn't affect the number of root
   expect(numRootCells).toBe(1);
 });
 
+test(`A successful call to newShoot() returns true`, () => { // TODO: Consider returning something about the new origin point/GrowingTip instead?
+  const plant = Plant();
+  const coords = createGrid(5, 6);
+  plant.setCoords(coords);
+
+  plant.sprout();
+  const result = plant.newShoot();
+
+  expect(result).toBe(true);
+});
+
 // newRoot()
 test(`Plant has function newRoot()`, () => {
   const plant = Plant();
@@ -338,6 +381,17 @@ test(`Calling newRoot() and then growRoots() doesn't affect the number of shoot 
   const numShootCells = plant.countCells('shoot');
 
   expect(numShootCells).toBe(1);
+});
+
+test(`A successful call to newRoot() returns true`, () => { // TODO: Consider returning something about the new origin point/GrowingTip instead?
+  const plant = Plant();
+  const coords = createGrid(5, 6);
+  plant.setCoords(coords);
+
+  plant.sprout();
+  const result = plant.newRoot();
+
+  expect(result).toBe(true);
 });
 
 // bloom()

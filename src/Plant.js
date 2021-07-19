@@ -38,6 +38,8 @@ const Plant = () => {
 
     coords[shootStartCoord] = 'shoot';
     coords[rootStartCoord] = 'root';
+
+    return true;
   }
 
   // user growth actions
@@ -59,13 +61,15 @@ const Plant = () => {
         coords[newCoord] = plantPart;
       }
     }
+
+    return true;
   }
 
   const growShoots = () => {
-    grow('shoot');
+    return grow('shoot');
   }
   const growRoots = () => {
-    grow('root');
+    return grow('root');
   }
 
   const newTip = (plantPart) => {
@@ -114,13 +118,14 @@ const Plant = () => {
     // add origin to usedOrigins
     usedOrigins.push(origin);
 
+    return true;
   }
 
   const newShoot = () => {
-    newTip('shoot');
+    return newTip('shoot');
   }
   const newRoot = () => {
-    newTip('root');
+    return newTip('root');
   }
   const bloom = () => {}
 
