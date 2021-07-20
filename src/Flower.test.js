@@ -1,5 +1,38 @@
 import Flower from './Flower';
 
+const stages = {
+  'bud': {
+    nextVerb: 'blossom',
+    minTime: 5,
+    nextStage: 'flower',
+  },
+  'flower': {
+    nextVerb: 'fertilize',
+    minTime: 5,
+    nextStage: 'fertilized flower',
+  },
+  'fertilized flower': {
+    nextVerb: 'fruit',
+    minTime: 5,
+    nextStage: 'fruit',
+  },
+  'fruit': {
+    nextVerb: 'ripen',
+    minTime: 5,
+    nextStage: 'ripe fruit',
+  },
+  'ripe fruit': {
+    nextVerb: 'disperse',
+    minTime: 5,
+    nextStage: 'dispersed seeds',
+  },
+  'dispersed seeds': {
+    nextVerb: '',
+    minTime: 5,
+    nextStage: '',
+  },
+};
+
 //////////// incTime()
 test(`Flower has function incTime()`, () => {
   const flower = Flower();
@@ -36,6 +69,14 @@ test(`The next verb for a new flower is 'blossom'`, () => {
   const nextVerb = flower.getNextVerb();
 
   expect(nextVerb).toBe('blossom');
+});
+
+///////////// isVerbReady()
+test(`isVerbReady() returns false for a brand new flower`, () => {
+  const flower = Flower();
+  const ready = flower.isVerbReady();
+
+  expect(ready).toBe(false);
 });
 
 ///////////// doVerb()
@@ -99,6 +140,23 @@ test(`A flower bud at time 4 cannot blossom`, () => {
   expect(stage).toBe('bud');
 });
 
+test(`A flower bud at time 5 can blossom and then cannot fertilize at time 4`, () => {
+  const flower = Flower();
+  for (let i=0; i<5; i++) {
+    flower.incTime();
+  }
+  flower.doVerb('blossom');
+
+  for (let i=0; i<4; i++) {
+    flower.incTime();
+  }
+  flower.doVerb('fertilize');
+
+  const stage = flower.getStage();
+
+  expect(stage).toBe('flower');
+});
+
 test(`A flower bud at time 5 cannot fertilize`, () => {
   const flower = Flower();
   for (let i=0; i<5; i++) {
@@ -109,4 +167,30 @@ test(`A flower bud at time 5 cannot fertilize`, () => {
   const stage = flower.getStage();
 
   expect(stage).toBe('bud');
+});
+
+//////////// seed dispersal
+test(`When seeds are dispersed, a positive integer is returned`, () => {
+  const flower = Flower();
+
+  let seeds = 0;
+
+  for (const [stage, val] of Object.entries(stages)) {
+    // run the clock
+    for (let i=0; i<val.minTime; i++) {
+      flower.incTime();
+    }
+    // do verb
+    if (stage === 'ripe fruit') {
+      seeds = flower.doVerb(val.nextVerb);
+    } else {
+      flower.doVerb(val.nextVerb);
+    }
+  }
+
+  const seedsIsPos = seeds > 0;
+  const seedsIsInt = Number.isInteger(seeds);
+
+  expect(seedsIsPos).toBe(true);
+  expect(seedsIsInt).toBe(true);
 });

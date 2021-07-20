@@ -32,7 +32,6 @@ const Flower = () => {
       nextStage: '',
     },
   };
-  const stagesArr = Object.keys(stages);
 
   let time = 0;
 
@@ -43,6 +42,13 @@ const Flower = () => {
   const getNextVerb = () => {
     // for displaying the user action button
     return stages[stage].nextVerb;
+  }
+
+  const isVerbReady = () => {
+    // true if time >= minTime
+    const minTime = stages[stage].minTime;
+
+    return ( time >= minTime );
   }
 
   const incTime = () => {
@@ -59,17 +65,20 @@ const Flower = () => {
 
   const doVerb = (verb) => {
     // only do it if stage and time are right
-    // check stage; stages[stage]['nextVerb'] === verb
-    // check time; stages[stage]['minTime'] <= time
-    if (stages[stage]['nextVerb'] === verb && stages[stage]['minTime'] <= time) {
+    if (getNextVerb() === verb && isVerbReady()) {
       // do it
       incStage();
+    }
+
+    if (stage === 'dispersed seeds') {
+      // disperse some seeds!
+      return 100; // TODO: Randomly generate the number of seeds
     }
   }
 
   return {
     getStage,
-    getNextVerb,
+    getNextVerb, isVerbReady,
     incTime,
     doVerb,
   };
