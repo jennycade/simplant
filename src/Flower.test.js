@@ -45,3 +45,68 @@ test(`Flower has function doVerb(verb)`, () => {
     doVerb: expect.any(Function),
   });
 });
+
+test(`A flower bud at time 5 can blossom`, () => {
+  const flower = Flower();
+  for (let i=0; i<5; i++) {
+    flower.incTime();
+  }
+  flower.doVerb('blossom');
+
+  const stage = flower.getStage();
+
+  expect(stage).toBe('flower');
+});
+
+test(`A flower bud at time 50 can blossom`, () => {
+  const flower = Flower();
+  for (let i=0; i<50; i++) {
+    flower.incTime();
+  }
+  flower.doVerb('blossom');
+
+  const stage = flower.getStage();
+
+  expect(stage).toBe('flower');
+});
+
+test(`A flower bud at time 5 can blossom and then fertilize at time 5`, () => {
+  const flower = Flower();
+  for (let i=0; i<5; i++) {
+    flower.incTime();
+  }
+  flower.doVerb('blossom');
+
+  for (let i=0; i<5; i++) {
+    flower.incTime();
+  }
+  flower.doVerb('fertilize');
+
+  const stage = flower.getStage();
+
+  expect(stage).toBe('fertilized flower');
+});
+
+test(`A flower bud at time 4 cannot blossom`, () => {
+  const flower = Flower();
+  for (let i=0; i<4; i++) {
+    flower.incTime();
+  }
+  flower.doVerb('blossom');
+
+  const stage = flower.getStage();
+
+  expect(stage).toBe('bud');
+});
+
+test(`A flower bud at time 5 cannot fertilize`, () => {
+  const flower = Flower();
+  for (let i=0; i<5; i++) {
+    flower.incTime();
+  }
+  flower.doVerb('fertilize');
+
+  const stage = flower.getStage();
+
+  expect(stage).toBe('bud');
+});
