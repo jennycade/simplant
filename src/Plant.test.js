@@ -1,5 +1,5 @@
 import Plant from './Plant';
-import { createGrid } from './helpers';
+import Habitat from './Habitat';
 
 // setCoords(coords)
 test('Plant has function setCoords(coords)', () => {
@@ -9,33 +9,6 @@ test('Plant has function setCoords(coords)', () => {
   });
 });
 
-test(`setCoords() takes an array of coordinates`, () => {
-  const plant = Plant();
-  const coords = createGrid(10,10);
-  plant.setCoords(coords); // no error is good enough for this test
-});
-
-test(`setCoords() sets the coords`, () => {
-  const plant = Plant();
-  const coords = createGrid(10,10); // ['0,0', '0,1', '0,2', ..., '9,9']
-  plant.setCoords(coords);
-  expect(Object.keys(plant.coords)).toEqual(coords);
-});
-
-test(`setCoords() makes all coords empty`, () => {
-  const plant = Plant();
-  const coords = createGrid(2, 2);
-  plant.setCoords(coords);
-
-  const grid = {
-    '0,0': '',
-    '0,1': '',
-    '1,0': '',
-    '1,1': '',
-  };
-
-  expect(plant.coords).toEqual(grid);
-});
 
 // sprout()
 test(`Plant has function sprout()`, () => {
@@ -46,9 +19,9 @@ test(`Plant has function sprout()`, () => {
 });
 
 test(`sprout() creates one shoot cell and one root cell`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
   const plant = Plant();
-  const coords = createGrid(5, 6);
-  plant.setCoords(coords);
 
   plant.sprout();
 
@@ -60,9 +33,9 @@ test(`sprout() creates one shoot cell and one root cell`, () => {
 });
 
 test(`sprout() creates one shoot cell in the upper-center cell and one root cell in the lower-center cell`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
   const plant = Plant();
-  const coords = createGrid(5, 6);
-  plant.setCoords(coords);
 
   plant.sprout();
 
@@ -74,9 +47,9 @@ test(`sprout() creates one shoot cell in the upper-center cell and one root cell
 });
 
 test(`Successful call to sprout() returns true`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
   const plant = Plant();
-  const coords = createGrid(5, 6);
-  plant.setCoords(coords);
   
   const result = plant.sprout();
 
@@ -92,17 +65,17 @@ test('Plant has function containsShoot()', () => {
 });
 
 test(`containsShoot() returns true as expected with a newly sprouted Plant`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
   const plant = Plant();
-  const coords = createGrid(5, 6);
-  plant.setCoords(coords);
   plant.sprout();
 
   expect(plant.containsShoot('2,2')).toBe(true);
 });
 test(`containsShoot() returns false as expected with a newly sprouted Plant`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
   const plant = Plant();
-  const coords = createGrid(5, 6);
-  plant.setCoords(coords);
   plant.sprout();
 
   expect(plant.containsShoot('2,0')).toBe(false);
@@ -116,17 +89,17 @@ test('Plant has function containsRoot()', () => {
   });
 });
 test(`containsRoot() returns true as expected with a newly sprouted Plant`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
   const plant = Plant();
-  const coords = createGrid(5, 6);
-  plant.setCoords(coords);
   plant.sprout();
 
   expect(plant.containsRoot('2,3')).toBe(true);
 });
 test(`containsRoot() returns false as expected with a newly sprouted Plant`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
   const plant = Plant();
-  const coords = createGrid(5, 6);
-  plant.setCoords(coords);
   plant.sprout();
 
   expect(plant.containsRoot('2,0')).toBe(false);
@@ -141,11 +114,11 @@ test(`Plant has function growShoots()`, () => {
 });
 
 test(`Calling growShoots() on a new plant creates a second shoot cell`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
   const plant = Plant();
-  const coords = createGrid(5, 6);
-  plant.setCoords(coords);
-
   plant.sprout();
+
   plant.growShoots();
 
   const numShootCells = plant.countCells('shoot');
@@ -154,11 +127,11 @@ test(`Calling growShoots() on a new plant creates a second shoot cell`, () => {
 });
 
 test(`Calling growShoots() on a new plant makes a new cell directly above the new plant`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
   const plant = Plant();
-  const coords = createGrid(5, 6);
-  plant.setCoords(coords);
-
   plant.sprout();
+
   plant.growShoots();
 
   let str = '';
@@ -173,11 +146,11 @@ test(`Calling growShoots() on a new plant makes a new cell directly above the ne
 });
 
 test(`Calling growShoots() doesn't affect the number of root cells`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
   const plant = Plant();
-  const coords = createGrid(5, 6);
-  plant.setCoords(coords);
-
   plant.sprout();
+
   plant.growShoots();
 
   const numRootCells = plant.countCells('root');
@@ -186,11 +159,11 @@ test(`Calling growShoots() doesn't affect the number of root cells`, () => {
 });
 
 test(`A successful call to growShoots() returns true`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
   const plant = Plant();
-  const coords = createGrid(5, 6);
-  plant.setCoords(coords);
-
   plant.sprout();
+
   const result = plant.growShoots();
 
   expect(result).toBe(true);
@@ -205,11 +178,11 @@ test(`Plant has function growRoots()`, () => {
 });
 
 test(`Calling growRoots() on a new plant creates a second root cell`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
   const plant = Plant();
-  const coords = createGrid(5, 6);
-  plant.setCoords(coords);
-
   plant.sprout();
+
   plant.growRoots();
 
   const numRootCells = plant.countCells('root');
@@ -218,11 +191,11 @@ test(`Calling growRoots() on a new plant creates a second root cell`, () => {
 });
 
 test(`Calling growRoots() on a new plant makes a new cell directly below the new plant`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
   const plant = Plant();
-  const coords = createGrid(5, 6);
-  plant.setCoords(coords);
-
   plant.sprout();
+
   plant.growRoots();
 
   let str = '';
@@ -237,11 +210,11 @@ test(`Calling growRoots() on a new plant makes a new cell directly below the new
 });
 
 test(`Calling growRoots() doesn't affect the number of shoot cells`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
   const plant = Plant();
-  const coords = createGrid(5, 6);
-  plant.setCoords(coords);
-
   plant.sprout();
+
   plant.growRoots();
 
   const numShootCells = plant.countCells('shoot');
@@ -250,11 +223,11 @@ test(`Calling growRoots() doesn't affect the number of shoot cells`, () => {
 });
 
 test(`A successful call to growRoots() returns true`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
   const plant = Plant();
-  const coords = createGrid(5, 6);
-  plant.setCoords(coords);
-
   plant.sprout();
+
   const result = plant.growRoots();
 
   expect(result).toBe(true);
@@ -269,9 +242,9 @@ test(`Plant has function newShoot()`, () => {
 });
 
 test(`Calling newShoot() and then growShoots() on a new plant creates two new shoot cells`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
   const plant = Plant();
-  const coords = createGrid(5, 6);
-  plant.setCoords(coords);
 
   plant.sprout();
   plant.newShoot();
@@ -285,9 +258,9 @@ test(`Calling newShoot() and then growShoots() on a new plant creates two new sh
 });
 
 test(`Calling newShoot() and then growShoots() twice on a new plant creates six shoot cells total`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
   const plant = Plant();
-  const coords = createGrid(5, 6);
-  plant.setCoords(coords);
 
   plant.sprout();
   plant.newShoot();
@@ -303,9 +276,9 @@ test(`Calling newShoot() and then growShoots() twice on a new plant creates six 
 });
 
 test(`Calling newShoot() and then growShoots() doesn't affect the number of root cells`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
   const plant = Plant();
-  const coords = createGrid(5, 6);
-  plant.setCoords(coords);
 
   plant.sprout();
   plant.newShoot();
@@ -317,9 +290,9 @@ test(`Calling newShoot() and then growShoots() doesn't affect the number of root
 });
 
 test(`A successful call to newShoot() returns true`, () => { // TODO: Consider returning something about the new origin point/GrowingTip instead?
+  const hab = Habitat();
+  hab.createGrid(5,6);
   const plant = Plant();
-  const coords = createGrid(5, 6);
-  plant.setCoords(coords);
 
   plant.sprout();
   const result = plant.newShoot();
@@ -336,9 +309,9 @@ test(`Plant has function newRoot()`, () => {
 });
 
 test(`Calling newRoot() and then growRoots() on a new plant creates two new root cells`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
   const plant = Plant();
-  const coords = createGrid(5, 6);
-  plant.setCoords(coords);
 
   plant.sprout();
   plant.newRoot();
@@ -352,9 +325,9 @@ test(`Calling newRoot() and then growRoots() on a new plant creates two new root
 });
 
 test(`Calling newRoot() and then growRoots() twice on a new plant creates six shoot cells total`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
   const plant = Plant();
-  const coords = createGrid(5, 6);
-  plant.setCoords(coords);
 
   plant.sprout();
   plant.newRoot();
@@ -370,9 +343,9 @@ test(`Calling newRoot() and then growRoots() twice on a new plant creates six sh
 });
 
 test(`Calling newRoot() and then growRoots() doesn't affect the number of shoot cells`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
   const plant = Plant();
-  const coords = createGrid(5, 6);
-  plant.setCoords(coords);
 
   plant.sprout();
   plant.newRoot();
@@ -384,9 +357,9 @@ test(`Calling newRoot() and then growRoots() doesn't affect the number of shoot 
 });
 
 test(`A successful call to newRoot() returns true`, () => { // TODO: Consider returning something about the new origin point/GrowingTip instead?
+  const hab = Habitat();
+  hab.createGrid(5,6);
   const plant = Plant();
-  const coords = createGrid(5, 6);
-  plant.setCoords(coords);
 
   plant.sprout();
   const result = plant.newRoot();
@@ -403,9 +376,9 @@ test(`Plant has function bloom()`, () => {
 });
 
 test(`Successful call to bloom() returns true`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
   const plant = Plant();
-  const coords = createGrid(5,6);
-  plant.setCoords(coords);
 
   plant.sprout();
   const result = plant.bloom();
@@ -414,9 +387,9 @@ test(`Successful call to bloom() returns true`, () => {
 });
 
 test(`When bloom() is called, one shoot cell switches to a flower cell`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
   const plant = Plant();
-  const coords = createGrid(5,6);
-  plant.setCoords(coords);
 
   plant.sprout();
   plant.bloom();
@@ -445,8 +418,9 @@ test(`Plant has function toString()`, () => {
 });
 
 test(`toString() returns a string`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
   const plant = Plant();
-  plant.setCoords(createGrid(5,5));
   expect(plant.toString()).toEqual(expect.any(String));
 });
 
@@ -458,8 +432,9 @@ test(`toString() properly stringifies an unsprouted plant`, () => {
   str += '-----\n';
   str += '-----\n';
 
+  const hab = Habitat();
+  hab.createGrid(5,6);
   const plant = Plant();
-  plant.setCoords(createGrid(5,5));
 
   expect(plant.toString()).toBe(str);
 });

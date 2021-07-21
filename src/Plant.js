@@ -19,7 +19,7 @@ const Plant = () => {
     for (let i = 0; i < newCoords.length; i++) {
       coords[newCoords[i]] = '';
     }
-    midline = findMidline(newCoords);
+    // midline = findMidline(newCoords);
   }
 
   // contains functions
