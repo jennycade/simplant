@@ -170,10 +170,8 @@ test(`A flower bud at time 5 cannot fertilize`, () => {
 });
 
 //////////// seed dispersal
-test(`When seeds are dispersed, a positive integer is returned`, () => {
+test(`When stage goes to 'dispersed seeds', getSeeds() returns a positive integer`, () => {
   const flower = Flower();
-
-  let seeds = 0;
 
   for (const [stage, val] of Object.entries(stages)) {
     // run the clock
@@ -181,16 +179,33 @@ test(`When seeds are dispersed, a positive integer is returned`, () => {
       flower.incTime();
     }
     // do verb
-    if (stage === 'ripe fruit') {
-      seeds = flower.doVerb(val.nextVerb);
-    } else {
-      flower.doVerb(val.nextVerb);
-    }
+    flower.doVerb(val.nextVerb);
   }
+
+  const seeds = flower.getSeeds();
 
   const seedsIsPos = seeds > 0;
   const seedsIsInt = Number.isInteger(seeds);
 
   expect(seedsIsPos).toBe(true);
   expect(seedsIsInt).toBe(true);
+});
+
+test(`Before seed dispersal, getSeeds() returns 0`, () => {
+  const flower = Flower();
+
+  for (const [stage, val] of Object.entries(stages)) {
+    // run the clock
+    for (let i=0; i<val.minTime; i++) {
+      flower.incTime();
+    }
+    // do verb
+    if (stage !== 'ripe fruit') {
+      flower.doVerb(val.nextVerb);
+    }
+  }
+
+  const seeds = flower.getSeeds();
+
+  expect(seeds).toBe(0);
 });

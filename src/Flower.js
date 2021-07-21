@@ -37,7 +37,11 @@ const Flower = () => {
 
   let stage = Object.keys(stages)[0];
 
+  let seeds = 0;
+
   const getStage = () => { return stage; }
+
+  const getSeeds = () => { return seeds }
 
   const getNextVerb = () => {
     // for displaying the user action button
@@ -70,14 +74,14 @@ const Flower = () => {
       incStage();
     }
 
-    if (stage === 'dispersed seeds') {
+    if (stage === 'dispersed seeds') { // TODO: Don't hardcode in this value; check to see if it's the last stage instead
       // disperse some seeds!
-      return 100; // TODO: Randomly generate the number of seeds
+      seeds = 100; // TODO: Randomly generate the number of seeds
     }
   }
 
   return {
-    getStage,
+    getStage, getSeeds,
     getNextVerb, isVerbReady,
     incTime,
     doVerb,
