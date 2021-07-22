@@ -1,4 +1,5 @@
 import GrowingTip from "./GrowingTip";
+import Flower from './Flower';
 import { parseCoord, unparseCoord } from "./helpers";
 
 const Plant = (midpoint, midline) => {
@@ -143,6 +144,7 @@ const Plant = (midpoint, midline) => {
     const flowerCoord = availableFlowerCoords[Math.floor(Math.random() * availableFlowerCoords.length)];
 
     // make new Flower()
+    flowers.push(Flower());
 
     // update coords
     coords[flowerCoord] = 'flower';
