@@ -52,7 +52,7 @@ const Habitat = () => {
   }
 
   const createPlant = () => {
-    plant = Plant();
+    plant = Plant(midpoint, midline);
 
     // setCoords
     plant.setCoords(coords);

@@ -1,11 +1,11 @@
 import GrowingTip from "./GrowingTip";
 import { parseCoord, unparseCoord } from "./helpers";
 
-const Plant = () => {
+const Plant = (midpoint, midline) => {
+
   let coords = {};
 
   // for new shoots and roots
-  let midline;
   let growingTips = [];
   let usedOrigins = [];
 
@@ -19,7 +19,6 @@ const Plant = () => {
     for (let i = 0; i < newCoords.length; i++) {
       coords[newCoords[i]] = '';
     }
-    // midline = findMidline(newCoords);
   }
 
   // contains functions
@@ -34,16 +33,14 @@ const Plant = () => {
   // make two growing tips: one shoot and one root
   // two pixels at the middle of the grid
   const sprout = () => {
-    const shootStartCoord = findMidpoint(Object.keys(coords), 'shoot');
-    const rootStartCoord = findMidpoint(Object.keys(coords), 'root');
 
     // growing tips
-    const shootMeristem = GrowingTip(shootStartCoord, 'u');
-    const rootMeristem = GrowingTip(rootStartCoord, 'd');
+    const shootMeristem = GrowingTip(midpoint.shoot, 'u');
+    const rootMeristem = GrowingTip(midpoint.root, 'd');
     growingTips = [shootMeristem, rootMeristem];
 
-    coords[shootStartCoord] = 'shoot';
-    coords[rootStartCoord] = 'root';
+    coords[midpoint.shoot] = 'shoot';
+    coords[midpoint.root] = 'root';
 
     return true;
   }
