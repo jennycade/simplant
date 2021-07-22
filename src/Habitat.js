@@ -10,6 +10,7 @@ const Habitat = () => {
     root: '',
   };
   let midline;
+  let soilLine;
 
   const setMidpoint = () => { 
     const [xmax, ymax] = parseCoord(maxCoord);
@@ -24,6 +25,9 @@ const Habitat = () => {
     // set value
     midpoint.shoot = unparseCoord(xmid, ymidShoot);
     midpoint.root = unparseCoord(xmid, ymidRoot);
+
+    // set soilLine too
+    soilLine = ymidRoot;
   }
 
   const setMidline = () => {
@@ -67,10 +71,20 @@ const Habitat = () => {
   }
   const getMidline = () => midline;
 
+  const getAbiotic = (coord) => {
+    const [x, y] = parseCoord(coord);
+    if (y < soilLine) {
+      return 'air';
+    } else {
+      return 'soil';
+    }
+  }
+
   return {
     createGrid,
     createPlant,
     getMaxCoord, getMidpoint, getMidline,
+    getAbiotic,
   }
 }
 

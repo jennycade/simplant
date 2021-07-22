@@ -80,3 +80,29 @@ test(`getMidline() returns 49 for a 100x100 grid`, () => {
   hab.createGrid(100,100);
   expect(hab.getMidline()).toBe(49);
 });
+
+// getPixel
+test(`Habitat has function getAbiotic()`, () => {
+  const hab = Habitat();
+  expect(hab).toMatchObject({
+    getAbiotic: expect.any(Function),
+  });
+});
+
+test(`getAbiotic() returns 'air' for empty shoot space`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
+  
+  const pixel = hab.getAbiotic('0,0');
+
+  expect(pixel).toBe('air');
+});
+
+test(`getAbiotic() returns 'soil' for empty root space`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
+  
+  const pixel = hab.getAbiotic('4,4');
+
+  expect(pixel).toBe('soil');
+});
