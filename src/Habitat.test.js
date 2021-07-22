@@ -50,32 +50,33 @@ test(`getMaxCoord returns the coord '4,4' on a 5x5 grid`, () => {
 });
 
 // getMidpoint()
+test(`getMidpoint() returns the coord '2,2' for shoot on a 5x6 grid`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
+  expect(hab.getMidpoint('shoot')).toBe('2,2');
+});
+
+test(`getMidpoint() returns the coord '2,3' for root on a 5x6 grid`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
+  expect(hab.getMidpoint('root')).toBe('2,3');
+});
+
+test(`getMidpoint() returns the coord '49, 49' for shoot on a 100x100 grid`, () => {
+  const hab = Habitat();
+  hab.createGrid(100,100);
+  expect(hab.getMidpoint('shoot')).toBe('49,49');
+});
 
 // getMidline()
+test(`getMidline() returns 2 for a 5x6 grid`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
+  expect(hab.getMidline()).toBe(2);
+});
 
-// findMidpoint()
-// test(`findMidpoint() returns the coord '2,2' for shoot on a 5x5 grid`, () => {
-//   const grid = createGrid(5,6);
-//   expect(findMidpoint(grid, 'shoot')).toBe('2,2');
-// });
-
-// test(`findMidpoint() returns the coord '2,3' for root on a 5x5 grid`, () => {
-//   const grid = createGrid(5,6);
-//   expect(findMidpoint(grid, 'root')).toBe('2,3');
-// });
-
-// test(`findMidpoint() returns the coord '49, 49' for shoot on a 100x100 grid`, () => {
-//   const grid = createGrid(100,100);
-//   expect(findMidpoint(grid, 'shoot')).toBe('49,49');
-// });
-
-// // findMidline()
-// test(`findMidline() returns 2 for a 5x6 grid`, () => {
-//   const grid = createGrid(5, 6);
-//   expect(findMidline(grid)).toBe(2);
-// });
-
-// test(`findMidline() returns 49 for a 100x100 grid`, () => {
-//   const grid = createGrid(100, 100);
-//   expect(findMidline(grid)).toBe(49);
-// });
+test(`getMidline() returns 49 for a 100x100 grid`, () => {
+  const hab = Habitat();
+  hab.createGrid(100,100);
+  expect(hab.getMidline()).toBe(49);
+});

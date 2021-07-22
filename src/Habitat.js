@@ -1,9 +1,35 @@
 import Plant from './Plant';
+import { parseCoord, unparseCoord } from './helpers';
 
 const Habitat = () => {
   let coords = [];
   let maxCoord = '';
   let plant = null;
+  let midpoint = {
+    shoot: '',
+    root: '',
+  };
+  let midline;
+
+  const setMidpoint = () => { 
+    const [xmax, ymax] = parseCoord(maxCoord);
+  
+    // find mid x coord
+    const xmid = Math.floor(xmax / 2);
+  
+    // find mid y coord
+    const ymidShoot = Math.floor(ymax / 2);
+    const ymidRoot = ymidShoot + 1;
+  
+    // set value
+    midpoint.shoot = unparseCoord(xmid, ymidShoot);
+    midpoint.root = unparseCoord(xmid, ymidRoot);
+  }
+
+  const setMidline = () => {
+    const xmax = parseCoord(maxCoord)[0];
+    midline = Math.floor(xmax / 2);
+  }
 
   const createGrid = (width, height) => {
     coords = [];
@@ -15,6 +41,12 @@ const Habitat = () => {
       }
     }
     maxCoord = `${width - 1},${height - 1}`;
+
+    // set midpoints
+    setMidpoint();
+
+    // set midline
+    setMidline();
 
     return coords; // ['0,0', '1,0', '2,0', ..., 'width,height']
   }
@@ -30,10 +62,15 @@ const Habitat = () => {
 
   const getMaxCoord = () => maxCoord;
 
+  const getMidpoint = (type) => {
+    return midpoint[type];
+  }
+  const getMidline = () => midline;
+
   return {
     createGrid,
     createPlant,
-    getMaxCoord,
+    getMaxCoord, getMidpoint, getMidline,
   }
 }
 

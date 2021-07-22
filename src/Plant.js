@@ -1,5 +1,5 @@
 import GrowingTip from "./GrowingTip";
-import { findMidline, findMidpoint, parseCoord, unparseCoord } from "./helpers";
+import { parseCoord, unparseCoord } from "./helpers";
 
 const Plant = () => {
   let coords = {};
