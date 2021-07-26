@@ -106,3 +106,30 @@ test(`getAbiotic() returns 'soil' for empty root space`, () => {
 
   expect(pixel).toBe('soil');
 });
+
+test(`getAbiotic() returns 'soil' for '0,3' on a 5x6 grid`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
+  
+  const pixel = hab.getAbiotic('0,3');
+
+  expect(pixel).toBe('soil');
+});
+
+test(`getAbiotic() returns 'air' for '0,2' on a 5x6 grid`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
+  
+  const pixel = hab.getAbiotic('0,2');
+
+  expect(pixel).toBe('air');
+});
+
+test(`getAbiotic() returns 'air' for '0,2' on a 5x5 grid`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,5);
+  
+  const pixel = hab.getAbiotic('0,2');
+
+  expect(pixel).toBe('air');
+});
