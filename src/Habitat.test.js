@@ -133,3 +133,5 @@ test(`getAbiotic() returns 'air' for '0,2' on a 5x5 grid`, () => {
 
   expect(pixel).toBe('air');
 });
+
+//////// Resource
