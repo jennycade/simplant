@@ -56,3 +56,18 @@ test(`Resource has function move()`, () => {
     move: expect.any(Function),
   });
 });
+
+test(`move() returns an array`, () => {
+  const sun = Resource('sun', sunCoords);
+  const newCoords = sun.move();
+  expect(newCoords).toEqual(expect.any(Array));
+});
+
+test(`The sun moves down`, () => {
+  const sun = Resource('sun', sunCoords);
+  const newCoords = sun.move();
+
+  const y = parseCoord(newCoords[0])[1];
+
+  expect(y).toBe(1);
+});

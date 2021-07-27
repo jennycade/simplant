@@ -17,10 +17,31 @@ const Resource = (type, legalCoords) => {
   coords.push(unparseCoord(x, y));
 
 
-  const move = () => {}
-  const getCoords = () => {
-    return coords;
+  const move = () => {
+    // set change in position
+    let xdiff, ydiff;
+    if (type === 'sun') {
+      // straight down
+      xdiff = 0;
+      ydiff = 1;
+    }
+    if (type === 'water') {
+      // up and randomly to one side
+
+    }
+
+    let newCoords = [];
+    // change coords
+    for (let i = 0; i < coords.length; i++ ) {
+      let [x, y] = parseCoord(coords[i]);
+      const newCoord = unparseCoord(x + xdiff, y + ydiff);
+      newCoords.push(newCoord);
+    }
+
+    coords = newCoords;
+    return newCoords;
   }
+  const getCoords = () => coords;
 
   return {
     move,
