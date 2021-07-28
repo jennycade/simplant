@@ -134,4 +134,96 @@ test(`getAbiotic() returns 'air' for '0,2' on a 5x5 grid`, () => {
   expect(pixel).toBe('air');
 });
 
-//////// Resource
+//////// Resources
+test(`Habitat has function getResources`, () => {
+  const hab = Habitat();
+  expect(hab).toMatchObject({
+    getResources: expect.any(Function),
+  });
+});
+
+test(`getResources() returns an array`, () => {
+  const hab = Habitat();
+  const res = hab.getResources();
+  expect(res).toEqual(expect.any(Array));
+});
+
+test(`Calling createSun makes resources length 1`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
+  
+  hab.createSun();
+  const res = hab.getResources();
+
+  expect(res.length).toBe(1);
+});
+
+test(`Calling createWater makes resources length 1`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
+  
+  hab.createWater();
+  const res = hab.getResources();
+
+  expect(res.length).toBe(1);
+});
+
+
+///////////// toString()
+test(`Habitat.toString() returns the expected string for a blank grid.`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
+  const str = hab.toString();
+
+  let expectedStr = '';
+  expectedStr += '     \n';
+  expectedStr += '     \n';
+  expectedStr += '     \n';
+  expectedStr += '.....\n';
+  expectedStr += '.....\n';
+  expectedStr += '.....\n';
+
+  expect(str).toEqual(expectedStr);
+});
+
+test(`Habitat.toString() renders environment + plant`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
+
+  const plant = hab.createPlant();
+  plant.sprout();
+
+  const str = hab.toString();
+
+  let expectedStr = '';
+  expectedStr += '     \n';
+  expectedStr += '     \n';
+  expectedStr += '  s  \n';
+  expectedStr += '..r..\n';
+  expectedStr += '.....\n';
+  expectedStr += '.....\n';
+
+  expect(str).toEqual(expectedStr);
+});
+
+test(`Habitat.toString() renders environment, plant, and sun`, () => {
+  const hab = Habitat();
+  hab.createGrid(1,6);
+
+  const plant = hab.createPlant();
+  plant.sprout();
+
+  hab.createSun();
+
+  const str = hab.toString();
+
+  let expectedStr = '';
+  expectedStr += 'p\n';
+  expectedStr += ' \n';
+  expectedStr += 's\n';
+  expectedStr += 'r\n';
+  expectedStr += '.\n';
+  expectedStr += '.\n';
+
+  expect(str).toEqual(expectedStr);
+});

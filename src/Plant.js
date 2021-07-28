@@ -221,6 +221,7 @@ const Plant = (midpoint, midline) => {
     sprout,
     containsShoot,
     containsRoot,
+    // TODO: write containsFlower
     growShoots, growRoots,
     newShoot, newRoot,
     bloom,

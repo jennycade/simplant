@@ -1,16 +1,20 @@
 import Plant from './Plant';
+import Resource from './Resource';
 import { parseCoord, unparseCoord } from './helpers';
 
 const Habitat = () => {
   let coords = [];
   let maxCoord = '';
   let plant = null;
+  let resources = [];
   let midpoint = {
     shoot: '',
     root: '',
   };
   let midline;
   let soilLine;
+  let sunCoords = [];
+  let waterCoords = [];
 
   const setMidpoint = () => { 
     const [xmax, ymax] = parseCoord(maxCoord);
@@ -28,6 +32,19 @@ const Habitat = () => {
 
     // set soilLine too
     soilLine = ymidRoot;
+  }
+
+  const setResourceCoords = () => {
+    // sunCoords = everything with y < soilLine
+    // waterCoords = everything with y >= soilLine
+    for (let i = 0; i < coords.length; i++) {
+      const y = parseCoord(coords[i])[1];
+      if (y < soilLine) {
+        sunCoords.push(coords[i]);
+      } else {
+        waterCoords.push(coords[i]);
+      }
+    }
   }
 
   const setMidline = () => {
@@ -49,6 +66,9 @@ const Habitat = () => {
     // set midpoints
     setMidpoint();
 
+    // set coords for sun and water
+    setResourceCoords();
+
     // set midline
     setMidline();
 
@@ -62,6 +82,16 @@ const Habitat = () => {
     plant.setCoords(coords);
 
     return plant;
+  }
+
+  const createSun = () => {
+    const sun = Resource('sun', sunCoords);
+    resources.push(sun);
+  }
+
+  const createWater = () => {
+    const water = Resource('water', waterCoords);
+    resources.push(water);
   }
 
   const getMaxCoord = () => maxCoord;
@@ -80,11 +110,72 @@ const Habitat = () => {
     }
   }
 
+  const getResources = () => resources;
+
+  const toString = () => {
+    // TODO: rewrite this a better way!
+    // 1. map resources
+    // 2. map plant
+    // 3. map environment
+    // 4. compile into a string
+    let str = '';
+
+    let arr = coords.map(coord => {
+      let code = '';
+
+      // resources
+      for (let i = 0; i < resources.length; i++) {
+        // this is 1000% the slow and stupid way to do this.
+        if (resources[i].getCoords().includes(coord)) {
+          const type = resources[i].getType();
+          if (type === 'sun') {
+            code = 'p';
+          } else if (type === 'water') {
+            code = 'w';
+          }
+        }
+      }
+
+      // plant
+      if (plant) {
+        if (plant.containsShoot(coord)) {
+          code = 's';
+        } else if (plant.containsRoot(coord)) {
+          code = 'r';
+        }
+      }
+
+      // abiotic
+      if (code === '') {
+        const pixel = getAbiotic(coord);
+        if (pixel === 'air') {
+          code = ' ';
+        }
+        if (pixel === 'soil') {
+          code = '.';
+        }
+      }
+
+      // end of line
+      if (parseCoord(coord)[0] === parseCoord(maxCoord)[0]) {
+        code += '\n';
+      }
+      return code;
+    });
+
+    str = arr.join('');
+
+    return str;
+  }
+
   return {
     createGrid,
     createPlant,
+    createSun, createWater,
     getMaxCoord, getMidpoint, getMidline,
     getAbiotic,
+    getResources,
+    toString,
   }
 }
 

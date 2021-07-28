@@ -56,10 +56,12 @@ const Resource = (type, legalCoords) => {
     return newCoords;
   }
   const getCoords = () => coords;
+  const getType = () => type;
 
   return {
     move,
     getCoords,
+    getType,
   }
 }
 
