@@ -16,27 +16,41 @@ const Resource = (type, legalCoords) => {
 
   coords.push(unparseCoord(x, y));
 
+  const isLegalxCoord = (newCoords) => {
+    let legal = true;
+    for (let i = 0; i < newCoords.length; i++) {
+      const [x, y] = parseCoord(newCoords[i]);
+      if (x < xmin || x > xmax) {
+        legal = false;
+      }
+    }
+    return legal;
+  }
 
   const move = () => {
     // set change in position
-    let xdiff, ydiff;
-    if (type === 'sun') {
-      // straight down
-      xdiff = 0;
-      ydiff = 1;
-    }
-    if (type === 'water') {
-      // up and randomly to one side
+    let xdiff, ydiff, newCoords;
+    const xchoices = [-1, 0, 1]; // up and randomly to one side or straight up (water)
 
-    }
+    do {
+      if (type === 'sun') {
+        // straight down
+        xdiff = 0;
+        ydiff = 1;
+      }
+      if (type === 'water') {
+        xdiff = xchoices[Math.floor(Math.random() * xchoices.length)];
+        ydiff = -1;
+      }
 
-    let newCoords = [];
-    // change coords
-    for (let i = 0; i < coords.length; i++ ) {
-      let [x, y] = parseCoord(coords[i]);
-      const newCoord = unparseCoord(x + xdiff, y + ydiff);
-      newCoords.push(newCoord);
-    }
+      let newCoords = [];
+      // change coords
+      for (let i = 0; i < coords.length; i++ ) {
+        let [x, y] = parseCoord(coords[i]);
+        const newCoord = unparseCoord(x + xdiff, y + ydiff);
+        newCoords.push(newCoord);
+      }
+    } while (! isLegalxCoord(newCoords))
 
     coords = newCoords;
     return newCoords;

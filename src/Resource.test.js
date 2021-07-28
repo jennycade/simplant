@@ -71,3 +71,51 @@ test(`The sun moves down`, () => {
 
   expect(y).toBe(1);
 });
+
+test(`Water moves up`, () => {
+  const water = Resource('water', rootCoords);
+  const newCoords = water.move();
+
+  const y = parseCoord(newCoords[0])[1];
+
+  expect(y).toBe(4);
+});
+
+test(`The sun doesn't change x position`, () => {
+  const sun = Resource('sun', sunCoords);
+  const oldCoords = sun.getCoords();
+  const oldx = parseCoord(oldCoords[0])[0];
+
+  const newCoords = sun.move();
+  const newx = parseCoord(newCoords[0])[0];
+
+  expect(oldx === newx).toBe(true);
+});
+
+test(`Water changes its position by -1, 0, or 1`, () => {
+  for (let i = 0; i < 20; i++) {
+    const water = Resource('water', rootCoords);
+    const oldCoords = water.getCoords();
+    const oldx = parseCoord(oldCoords[0])[0];
+  
+    const newCoords = water.move();
+    const newx = parseCoord(newCoords[0])[0];
+  
+    const xdiffs = [-1, 0, 1];
+    expect(xdiffs.includes(oldx - newx)).toBe(true);
+  }
+});
+
+test(`Water won't move into an illegal x space`, () => {
+  for (let i = 0; i < 20; i++) {
+    const water = Resource('water', rootCoords);
+
+    // move twice
+    water.move();
+    const newCoords = water.move();
+    const newx = parseCoord(newCoords[0])[0];
+  
+    expect(newx).toBeGreaterThanOrEqual(0);
+    expect(newx).toBeLessThanOrEqual(4);
+  }
+});
