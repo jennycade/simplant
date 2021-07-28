@@ -30,8 +30,7 @@ const Resource = (type, legalCoords) => {
   const move = () => {
     // set change in position
     let xdiff, ydiff, newCoords;
-    const xchoices = [-1, 0, 1]; // up and randomly to one side or straight up (water)
-
+    const xchoices = [-1, 0, 1]; 
     do {
       if (type === 'sun') {
         // straight down
@@ -39,18 +38,19 @@ const Resource = (type, legalCoords) => {
         ydiff = 1;
       }
       if (type === 'water') {
+        // up and randomly to one side or straight up
         xdiff = xchoices[Math.floor(Math.random() * xchoices.length)];
         ydiff = -1;
       }
 
-      let newCoords = [];
+      newCoords = [];
       // change coords
       for (let i = 0; i < coords.length; i++ ) {
         let [x, y] = parseCoord(coords[i]);
         const newCoord = unparseCoord(x + xdiff, y + ydiff);
         newCoords.push(newCoord);
       }
-    } while (! isLegalxCoord(newCoords))
+    } while (! isLegalxCoord(newCoords) )
 
     coords = newCoords;
     return newCoords;
