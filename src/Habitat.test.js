@@ -249,3 +249,72 @@ test(`Habitat.toString() renders environment, plant, and water`, () => {
 
   expect(str).toEqual(expectedStr);
 });
+
+////////////// tick()
+test(`Habitat has function tick()`, () => {
+  const hab = Habitat();
+  expect(hab).toMatchObject({
+    tick: expect.any(Function),
+  });
+});
+
+test(`After a tick, sunlight moves down`, () => {
+  const hab = Habitat();
+  hab.createGrid(1, 6);
+
+  hab.createSun();
+  hab.tick();
+
+  const str = hab.toString();
+
+  let expectedStr = '';
+  expectedStr += ' \n';
+  expectedStr += 'p\n';
+  expectedStr += ' \n';
+  expectedStr += '.\n';
+  expectedStr += '.\n';
+  expectedStr += '.\n';
+
+  expect(str).toEqual(expectedStr);
+});
+
+test(`After a tick, water moves up`, () => {
+  const hab = Habitat();
+  hab.createGrid(1, 6);
+
+  hab.createWater();
+  hab.tick();
+
+  const str = hab.toString();
+
+  let expectedStr = '';
+  expectedStr += ' \n';
+  expectedStr += ' \n';
+  expectedStr += ' \n';
+  expectedStr += '.\n';
+  expectedStr += 'w\n';
+  expectedStr += '.\n';
+
+  expect(str).toEqual(expectedStr);
+});
+
+test(`After a tick, sunlight moves down and water moves up`, () => {
+  const hab = Habitat();
+  hab.createGrid(1, 6);
+
+  hab.createSun();
+  hab.createWater();
+  hab.tick();
+
+  const str = hab.toString();
+
+  let expectedStr = '';
+  expectedStr += ' \n';
+  expectedStr += 'p\n';
+  expectedStr += ' \n';
+  expectedStr += '.\n';
+  expectedStr += 'w\n';
+  expectedStr += '.\n';
+
+  expect(str).toEqual(expectedStr);
+});

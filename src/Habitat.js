@@ -157,13 +157,20 @@ const Habitat = () => {
       }
       
     }
-    // console.table(map);
 
     return map;
   }
 
-  const toString = () => {
+  const tick = () => {
+    // moves all resources
+    for (let i = 0; i < resources.length; i++) {
+      resources[i].move();
+    }
+    // refreshes map
+  }
 
+  const toString = () => { // for development
+    // get map object
     let map = mapCoords();
 
     const codes = {
@@ -177,7 +184,7 @@ const Habitat = () => {
       'water': 'w',
     }
 
-    // 4. compile into a string
+    // compile and collapse into a string
     let str = '';
 
     let arr = coords.map(coord => {
@@ -218,6 +225,7 @@ const Habitat = () => {
     getMaxCoord, getMidpoint, getMidline,
     getAbiotic,
     getResources,
+    tick,
     toString,
   }
 }
