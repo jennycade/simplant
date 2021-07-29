@@ -144,24 +144,34 @@ const Plant = (midpoint, midline) => {
     const flowerCoord = availableFlowerCoords[Math.floor(Math.random() * availableFlowerCoords.length)];
 
     // make new Flower()
-    flowers.push(Flower());
+    const flower = Flower();
+    flowers.push(flower);
 
     // update coords
-    coords[flowerCoord] = 'flower';
+    coords[flowerCoord] = flower.getStage(); // TODO: update by stage
 
     // add to usedFlowerCoords
     usedFlowerCoords.push(flowerCoord);
 
-    return true;
+    return flower;
   }
 
   const getCoords = () => coords;
+
+  const tick = () => {
+    // time progresses for flowers
+    for (let i = 0; i < flowers.length; i++) {
+      flowers[i].incTime();
+    }
+  }
 
   // for dev: count cells
   const countCells = (type) => {
     let numShootCells = 0;
     let numRootCells = 0;
     let numFlowerCells = 0;
+
+    const flowerStages = ['bud', 'flower', 'fertilized flower', 'fruit', 'ripe fruit', 'dispersed seeds'];
 
     // count the occupied coordinates
     for (const [coord, val] of Object.entries(coords)) {
@@ -171,7 +181,7 @@ const Plant = (midpoint, midline) => {
       if (val === 'root') {
         numRootCells++;
       }
-      if (val === 'flower') {
+      if (flowerStages.includes(val)) {
         numFlowerCells++;
       }
     }
@@ -190,6 +200,17 @@ const Plant = (midpoint, midline) => {
 
   // also (probably) for dev: toString()
   const toString = () => {
+    const codes = {
+      'shoot':  's',
+      'root':   'r',
+      'bud':               '1',
+      'flower':            '2',
+      'fertilized flower': '3',
+      'fruit':             '4',
+      'ripe fruit':        '5',
+      'dispersed seeds':   '6',
+    };
+
     let str = '';
     // coords = {'0,0': '', '1,0': '', ..., 'xmax,ymax': ''}
     // parse last coord
@@ -207,7 +228,7 @@ const Plant = (midpoint, midline) => {
           code = '-';
         } else {
           // first character
-          code = status.substring(0, 1);
+          code = codes[status];
         }
 
         str += code;
@@ -227,6 +248,7 @@ const Plant = (midpoint, midline) => {
     growShoots, growRoots,
     newShoot, newRoot,
     bloom,
+    tick,
 
     countCells,
     toString,

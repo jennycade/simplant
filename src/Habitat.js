@@ -166,7 +166,10 @@ const Habitat = () => {
     for (let i = 0; i < resources.length; i++) {
       resources[i].move();
     }
-    // refreshes map
+
+    // TODO: makes time pass for flowers
+
+    // TODO: refreshes map (?)
   }
 
   const toString = () => { // for development
@@ -174,14 +177,21 @@ const Habitat = () => {
     let map = mapCoords();
 
     const codes = {
-      'air':   ' ',
-      'soil':  '.',
+      'air':    ' ',
+      'soil':   '.',
 
-      'shoot': 's',
-      'root':  'r',
+      'shoot':  's',
+      'root':   'r',
 
-      'sun':   'p',
-      'water': 'w',
+      'bud':               '1', // TODO: get Plant.getCoords() to return flower stage instead of just 'flower'
+      'flower':            '2',
+      'fertilized flower': '3',
+      'fruit':             '4',
+      'ripe fruit':        '5',
+      'dispersed seeds':   '6',
+
+      'sun':    'p',
+      'water':  'w',
     }
 
     // compile and collapse into a string

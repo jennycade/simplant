@@ -250,6 +250,27 @@ test(`Habitat.toString() renders environment, plant, and water`, () => {
   expect(str).toEqual(expectedStr);
 });
 
+test(`toString() displays flowers`, () => {
+  const hab = Habitat();
+  hab.createGrid(1,6);
+
+  const plant = hab.createPlant();
+  plant.sprout();
+  plant.bloom();
+
+  const str = hab.toString();
+
+  let expectedStr = '';
+  expectedStr += ' \n';
+  expectedStr += ' \n';
+  expectedStr += '1\n';
+  expectedStr += 'r\n';
+  expectedStr += '.\n';
+  expectedStr += '.\n';
+
+  expect(str).toEqual(expectedStr);
+});
+
 ////////////// tick()
 test(`Habitat has function tick()`, () => {
   const hab = Habitat();

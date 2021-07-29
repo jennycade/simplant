@@ -375,7 +375,7 @@ test(`Plant has function bloom()`, () => {
   });
 });
 
-test(`Successful call to bloom() returns true`, () => {
+test(`Successful call to bloom() returns a flower object`, () => {
   const hab = Habitat();
   hab.createGrid(5,6);
   const plant = hab.createPlant();
@@ -383,7 +383,7 @@ test(`Successful call to bloom() returns true`, () => {
   plant.sprout();
   const result = plant.bloom();
 
-  expect(result).toBe(true);
+  expect(result).toMatchObject(expect.any(Object));
 });
 
 test(`When bloom() is called, one shoot cell switches to a flower cell`, () => {
@@ -393,8 +393,6 @@ test(`When bloom() is called, one shoot cell switches to a flower cell`, () => {
 
   plant.sprout();
   plant.bloom();
-
-  // console.log(plant.toString());
 
   const numFlowerCells = plant.countCells('flower');
 
@@ -439,5 +437,67 @@ test(`toString() properly stringifies an unsprouted plant`, () => {
   expect(plant.toString()).toBe(str);
 });
 
+// TODO: Write tests for flower stages
+test(`toString() properly stringifies a sprouted plant`, () => {
+  let str = '';
+  str += '-----\n';
+  str += '-----\n';
+  str += '--s--\n';
+  str += '--r--\n';
+  str += '-----\n';
+  str += '-----\n';
+
+  const hab = Habitat();
+  hab.createGrid(5,6);
+  const plant = hab.createPlant();
+  plant.sprout();
+
+  expect(plant.toString()).toBe(str);
+});
+
+test(`toString() properly stringifies a flowering plant`, () => {
+  let str = '';
+  str += '-----\n';
+  str += '-----\n';
+  str += '--1--\n';
+  str += '--r--\n';
+  str += '-----\n';
+  str += '-----\n';
+
+  const hab = Habitat();
+  hab.createGrid(5,6);
+  const plant = hab.createPlant();
+  plant.sprout();
+  plant.bloom();
+
+  expect(plant.toString()).toBe(str);
+});
 
 // TODO: Write tests for when plant growth goes off the board
+
+/////////// Plant.tick() makes time pass for flowers
+test(`Plant has function tick()`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
+  const plant = hab.createPlant();
+  expect(plant).toMatchObject({
+    tick: expect.any(Function),
+  });
+});
+
+test(`A bud can turn into a flower after tick is called 5 times`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
+  const plant = hab.createPlant();
+
+  plant.sprout();
+  const flower = plant.bloom();
+
+  for (let i = 0; i < 5; i++) {
+    plant.tick();
+  }
+
+  flower.doVerb('blossom');
+
+  expect(flower.getStage()).toBe('flower');
+});
