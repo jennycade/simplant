@@ -227,3 +227,25 @@ test(`Habitat.toString() renders environment, plant, and sun`, () => {
 
   expect(str).toEqual(expectedStr);
 });
+
+test(`Habitat.toString() renders environment, plant, and water`, () => {
+  const hab = Habitat();
+  hab.createGrid(1,6);
+
+  const plant = hab.createPlant();
+  plant.sprout();
+
+  hab.createWater();
+
+  const str = hab.toString();
+
+  let expectedStr = '';
+  expectedStr += ' \n';
+  expectedStr += ' \n';
+  expectedStr += 's\n';
+  expectedStr += 'r\n';
+  expectedStr += '.\n';
+  expectedStr += 'w\n';
+
+  expect(str).toEqual(expectedStr);
+});

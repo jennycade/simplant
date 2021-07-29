@@ -155,6 +155,8 @@ const Plant = (midpoint, midline) => {
     return true;
   }
 
+  const getCoords = () => coords;
+
   // for dev: count cells
   const countCells = (type) => {
     let numShootCells = 0;
@@ -216,7 +218,7 @@ const Plant = (midpoint, midline) => {
   }
 
   return {
-    coords,
+    coords, getCoords,
     setCoords,
     sprout,
     containsShoot,

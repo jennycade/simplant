@@ -7,6 +7,7 @@ const Habitat = () => {
   let maxCoord = '';
   let plant = null;
   let resources = [];
+
   let midpoint = {
     shoot: '',
     root: '',
@@ -112,48 +113,90 @@ const Habitat = () => {
 
   const getResources = () => resources;
 
+  const mapCoords = () => {
+
+    // plant
+    let plantCoords;
+    if (plant) {
+      plantCoords = plant.getCoords();
+    }
+
+    // resources
+    let resourcesCoords = {};
+    // iterate over resources (sun and water objects)
+    for (let i = 0; i < resources.length; i++) {
+      const resCoords = resources[i].getCoords(); // array of coords for each resource
+      const type = resources[i].getType(); // 'sun' or 'water'
+      
+      // iterate over coords of single resource
+      for (let j = 0; j < resCoords.length; j++) {
+        // add to overall resourcesCoords object: 'coord': 'sun' or 'water'
+        resourcesCoords[resCoords[j]] = type;
+      }
+    }
+
+    let map = {};
+    for (let i = 0; i < coords.length; i++) {
+
+      // populate coords
+      const coord = coords[i];
+      map[coord] = {};
+
+      // environment
+      map[coord]['environment'] = getAbiotic(coord); // 'soil' or 'air'
+
+      // plant
+      if (plantCoords) {
+        map[coord]['plant'] = plantCoords[coord]; // 'shoot' or 'root' or 'flower' or ''
+        // TODO: get stage of flower
+      }
+
+      // resources
+      if (resourcesCoords[coord]) {
+        map[coord]['resource'] = resourcesCoords[coord] // 'sun' or 'water'
+      }
+      
+    }
+    // console.table(map);
+
+    return map;
+  }
+
   const toString = () => {
-    // TODO: rewrite this a better way!
-    // 1. map resources
-    // 2. map plant
-    // 3. map environment
+
+    let map = mapCoords();
+
+    const codes = {
+      'air':   ' ',
+      'soil':  '.',
+
+      'shoot': 's',
+      'root':  'r',
+
+      'sun':   'p',
+      'water': 'w',
+    }
+
     // 4. compile into a string
     let str = '';
 
     let arr = coords.map(coord => {
+      let pixel = map[coord]; // { environment: string, plant: string, [resource: string] }
       let code = '';
 
-      // resources
-      for (let i = 0; i < resources.length; i++) {
-        // this is 1000% the slow and stupid way to do this.
-        if (resources[i].getCoords().includes(coord)) {
-          const type = resources[i].getType();
-          if (type === 'sun') {
-            code = 'p';
-          } else if (type === 'water') {
-            code = 'w';
-          }
-        }
-      }
+      // layering: resource > plant > environment
+
+      // environment
+      code = codes[pixel.environment];
 
       // plant
-      if (plant) {
-        if (plant.containsShoot(coord)) {
-          code = 's';
-        } else if (plant.containsRoot(coord)) {
-          code = 'r';
-        }
+      if (pixel.plant && pixel.plant !== '') {
+        code = codes[pixel.plant];
       }
 
-      // abiotic
-      if (code === '') {
-        const pixel = getAbiotic(coord);
-        if (pixel === 'air') {
-          code = ' ';
-        }
-        if (pixel === 'soil') {
-          code = '.';
-        }
+      // environment
+      if (pixel.resource) {
+        code = codes[pixel.resource];
       }
 
       // end of line
