@@ -166,8 +166,10 @@ const Habitat = () => {
     for (let i = 0; i < resources.length; i++) {
       resources[i].move();
     }
-
-    // TODO: makes time pass for flowers
+    if (plant !== null) {
+      console.log('Ticking the plant');
+      plant.tick();
+    }
 
     // TODO: refreshes map (?)
   }
@@ -228,6 +230,8 @@ const Habitat = () => {
     return str;
   }
 
+  const getPlant = () => plant;
+
   return {
     createGrid,
     createPlant,
@@ -237,6 +241,7 @@ const Habitat = () => {
     getResources,
     tick,
     toString,
+    getPlant,
   }
 }
 

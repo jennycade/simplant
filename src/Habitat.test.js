@@ -339,3 +339,22 @@ test(`After a tick, sunlight moves down and water moves up`, () => {
 
   expect(str).toEqual(expectedStr);
 });
+
+test(`After 5 ticks a bud can blossom into a flower`, () => {
+  const hab = Habitat();
+  hab.createGrid(1, 6);
+
+  const plant = hab.createPlant();
+  plant.sprout();
+  const flower = plant.bloom();
+
+  for (let i = 0; i < 5; i++) {
+    hab.tick();
+  }
+  
+  flower.doVerb('blossom');
+
+  const stage = flower.getStage();
+
+  expect(stage).toEqual('flower');
+});
