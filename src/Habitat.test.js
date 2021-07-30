@@ -191,7 +191,7 @@ test(`Habitat.toString() renders environment + plant`, () => {
   hab.createGrid(5,6);
 
   const plant = hab.createPlant();
-  plant.sprout();
+  // plant.sprout();
 
   const str = hab.toString();
 
@@ -211,7 +211,7 @@ test(`Habitat.toString() renders environment, plant, and sun`, () => {
   hab.createGrid(1,6);
 
   const plant = hab.createPlant();
-  plant.sprout();
+  // plant.sprout();
 
   hab.createSun();
 
@@ -233,7 +233,7 @@ test(`Habitat.toString() renders environment, plant, and water`, () => {
   hab.createGrid(1,6);
 
   const plant = hab.createPlant();
-  plant.sprout();
+  // plant.sprout();
 
   hab.createWater();
 
@@ -255,7 +255,7 @@ test(`toString() displays flowers`, () => {
   hab.createGrid(1,6);
 
   const plant = hab.createPlant();
-  plant.sprout();
+  // plant.sprout();
   plant.bloom();
 
   const str = hab.toString();
@@ -345,7 +345,7 @@ test(`After 5 ticks a bud can blossom into a flower`, () => {
   hab.createGrid(1, 6);
 
   const plant = hab.createPlant();
-  plant.sprout();
+  // plant.sprout();
   const flower = plant.bloom();
 
   for (let i = 0; i < 5; i++) {
@@ -357,4 +357,24 @@ test(`After 5 ticks a bud can blossom into a flower`, () => {
   const stage = flower.getStage();
 
   expect(stage).toEqual('flower');
+});
+
+/////////// Habitat has complete control
+test(`Plant sprouts upon creation`, () => {
+  const hab = Habitat();
+  hab.createGrid(1,6);
+
+  hab.createPlant();
+
+  const str = hab.toString();
+
+  let expectedStr = '';
+  expectedStr += ' \n';
+  expectedStr += ' \n';
+  expectedStr += 's\n';
+  expectedStr += 'r\n';
+  expectedStr += '.\n';
+  expectedStr += '.\n';
+
+  expect(str).toBe(expectedStr);
 });

@@ -23,7 +23,7 @@ test(`sprout() creates one shoot cell and one root cell`, () => {
   hab.createGrid(5,6);
   const plant = hab.createPlant();
 
-  plant.sprout();
+  // plant.sprout();
 
   const numShootCells = plant.countCells('shoot');
   const numRootCells = plant.countCells('root');
@@ -37,23 +37,13 @@ test(`sprout() creates one shoot cell in the upper-center cell and one root cell
   hab.createGrid(5,6);
   const plant = hab.createPlant();
 
-  plant.sprout();
+  // plant.sprout();
 
   expect(plant.coords).toMatchObject({
     '2,2': 'shoot',
     '2,3': 'root',
   });
   
-});
-
-test(`Successful call to sprout() returns true`, () => {
-  const hab = Habitat();
-  hab.createGrid(5,6);
-  const plant = hab.createPlant();
-  
-  const result = plant.sprout();
-
-  expect(result).toBe(true);
 });
 
 // containsShoot(coord)
@@ -68,7 +58,7 @@ test(`containsShoot() returns true as expected with a newly sprouted Plant`, () 
   const hab = Habitat();
   hab.createGrid(5,6);
   const plant = hab.createPlant();
-  plant.sprout();
+  // plant.sprout();
 
   expect(plant.containsShoot('2,2')).toBe(true);
 });
@@ -76,7 +66,7 @@ test(`containsShoot() returns false as expected with a newly sprouted Plant`, ()
   const hab = Habitat();
   hab.createGrid(5,6);
   const plant = hab.createPlant();
-  plant.sprout();
+  // plant.sprout();
 
   expect(plant.containsShoot('2,0')).toBe(false);
 });
@@ -92,7 +82,7 @@ test(`containsRoot() returns true as expected with a newly sprouted Plant`, () =
   const hab = Habitat();
   hab.createGrid(5,6);
   const plant = hab.createPlant();
-  plant.sprout();
+  // plant.sprout();
 
   expect(plant.containsRoot('2,3')).toBe(true);
 });
@@ -100,7 +90,7 @@ test(`containsRoot() returns false as expected with a newly sprouted Plant`, () 
   const hab = Habitat();
   hab.createGrid(5,6);
   const plant = hab.createPlant();
-  plant.sprout();
+  // plant.sprout();
 
   expect(plant.containsRoot('2,0')).toBe(false);
 });
@@ -117,7 +107,7 @@ test(`Calling growShoots() on a new plant creates a second shoot cell`, () => {
   const hab = Habitat();
   hab.createGrid(5,6);
   const plant = hab.createPlant();
-  plant.sprout();
+  // plant.sprout();
 
   plant.growShoots();
 
@@ -130,7 +120,7 @@ test(`Calling growShoots() on a new plant makes a new cell directly above the ne
   const hab = Habitat();
   hab.createGrid(5,6);
   const plant = hab.createPlant();
-  plant.sprout();
+  // plant.sprout();
 
   plant.growShoots();
 
@@ -149,7 +139,7 @@ test(`Calling growShoots() doesn't affect the number of root cells`, () => {
   const hab = Habitat();
   hab.createGrid(5,6);
   const plant = hab.createPlant();
-  plant.sprout();
+  // plant.sprout();
 
   plant.growShoots();
 
@@ -162,7 +152,7 @@ test(`A successful call to growShoots() returns true`, () => {
   const hab = Habitat();
   hab.createGrid(5,6);
   const plant = hab.createPlant();
-  plant.sprout();
+  // plant.sprout();
 
   const result = plant.growShoots();
 
@@ -181,7 +171,7 @@ test(`Calling growRoots() on a new plant creates a second root cell`, () => {
   const hab = Habitat();
   hab.createGrid(5,6);
   const plant = hab.createPlant();
-  plant.sprout();
+  // plant.sprout();
 
   plant.growRoots();
 
@@ -194,7 +184,7 @@ test(`Calling growRoots() on a new plant makes a new cell directly below the new
   const hab = Habitat();
   hab.createGrid(5,6);
   const plant = hab.createPlant();
-  plant.sprout();
+  // plant.sprout();
 
   plant.growRoots();
 
@@ -213,7 +203,7 @@ test(`Calling growRoots() doesn't affect the number of shoot cells`, () => {
   const hab = Habitat();
   hab.createGrid(5,6);
   const plant = hab.createPlant();
-  plant.sprout();
+  // plant.sprout();
 
   plant.growRoots();
 
@@ -226,7 +216,7 @@ test(`A successful call to growRoots() returns true`, () => {
   const hab = Habitat();
   hab.createGrid(5,6);
   const plant = hab.createPlant();
-  plant.sprout();
+  // plant.sprout();
 
   const result = plant.growRoots();
 
@@ -246,7 +236,7 @@ test(`Calling newShoot() and then growShoots() on a new plant creates two new sh
   hab.createGrid(5,6);
   const plant = hab.createPlant();
 
-  plant.sprout();
+  // plant.sprout();
   plant.newShoot();
   plant.growShoots();
 
@@ -262,7 +252,7 @@ test(`Calling newShoot() and then growShoots() twice on a new plant creates six 
   hab.createGrid(5,6);
   const plant = hab.createPlant();
 
-  plant.sprout();
+  // plant.sprout();
   plant.newShoot();
   plant.growShoots();
   plant.newShoot();
@@ -280,7 +270,7 @@ test(`Calling newShoot() and then growShoots() doesn't affect the number of root
   hab.createGrid(5,6);
   const plant = hab.createPlant();
 
-  plant.sprout();
+  // plant.sprout();
   plant.newShoot();
   plant.growShoots();
 
@@ -294,7 +284,7 @@ test(`A successful call to newShoot() returns true`, () => { // TODO: Consider r
   hab.createGrid(5,6);
   const plant = hab.createPlant();
 
-  plant.sprout();
+  // plant.sprout();
   const result = plant.newShoot();
 
   expect(result).toBe(true);
@@ -313,7 +303,7 @@ test(`Calling newRoot() and then growRoots() on a new plant creates two new root
   hab.createGrid(5,6);
   const plant = hab.createPlant();
 
-  plant.sprout();
+  // plant.sprout();
   plant.newRoot();
   plant.growRoots();
 
@@ -329,7 +319,7 @@ test(`Calling newRoot() and then growRoots() twice on a new plant creates six sh
   hab.createGrid(5,6);
   const plant = hab.createPlant();
 
-  plant.sprout();
+  // plant.sprout();
   plant.newRoot();
   plant.growRoots();
   plant.newRoot();
@@ -347,7 +337,7 @@ test(`Calling newRoot() and then growRoots() doesn't affect the number of shoot 
   hab.createGrid(5,6);
   const plant = hab.createPlant();
 
-  plant.sprout();
+  // plant.sprout();
   plant.newRoot();
   plant.growRoots();
 
@@ -361,7 +351,7 @@ test(`A successful call to newRoot() returns true`, () => { // TODO: Consider re
   hab.createGrid(5,6);
   const plant = hab.createPlant();
 
-  plant.sprout();
+  // plant.sprout();
   const result = plant.newRoot();
 
   expect(result).toBe(true);
@@ -380,7 +370,7 @@ test(`Successful call to bloom() returns a flower object`, () => {
   hab.createGrid(5,6);
   const plant = hab.createPlant();
 
-  plant.sprout();
+  // plant.sprout();
   const result = plant.bloom();
 
   expect(result).toMatchObject(expect.any(Object));
@@ -391,7 +381,7 @@ test(`When bloom() is called, one shoot cell switches to a flower cell`, () => {
   hab.createGrid(5,6);
   const plant = hab.createPlant();
 
-  plant.sprout();
+  // plant.sprout();
   plant.bloom();
 
   const numFlowerCells = plant.countCells('flower');
@@ -422,20 +412,20 @@ test(`toString() returns a string`, () => {
   expect(plant.toString()).toEqual(expect.any(String));
 });
 
-test(`toString() properly stringifies an unsprouted plant`, () => {
-  let str = '';
-  str += '-----\n';
-  str += '-----\n';
-  str += '-----\n';
-  str += '-----\n';
-  str += '-----\n';
+// test(`toString() properly stringifies an unsprouted plant`, () => {
+//   let str = '';
+//   str += '-----\n';
+//   str += '-----\n';
+//   str += '-----\n';
+//   str += '-----\n';
+//   str += '-----\n';
 
-  const hab = Habitat();
-  hab.createGrid(5,5);
-  const plant = hab.createPlant();
+//   const hab = Habitat();
+//   hab.createGrid(5,5);
+//   const plant = hab.createPlant();
 
-  expect(plant.toString()).toBe(str);
-});
+//   expect(plant.toString()).toBe(str);
+// });
 
 // TODO: Write tests for flower stages
 test(`toString() properly stringifies a sprouted plant`, () => {
@@ -450,7 +440,7 @@ test(`toString() properly stringifies a sprouted plant`, () => {
   const hab = Habitat();
   hab.createGrid(5,6);
   const plant = hab.createPlant();
-  plant.sprout();
+  // plant.sprout();
 
   expect(plant.toString()).toBe(str);
 });
@@ -467,7 +457,7 @@ test(`toString() properly stringifies a flowering plant`, () => {
   const hab = Habitat();
   hab.createGrid(5,6);
   const plant = hab.createPlant();
-  plant.sprout();
+  // plant.sprout();
   plant.bloom();
 
   expect(plant.toString()).toBe(str);
@@ -490,7 +480,7 @@ test(`A bud can turn into a flower after tick is called 5 times`, () => {
   hab.createGrid(5,6);
   const plant = hab.createPlant();
 
-  plant.sprout();
+  // plant.sprout();
   const flower = plant.bloom();
 
   for (let i = 0; i < 5; i++) {

@@ -82,6 +82,9 @@ const Habitat = () => {
     // setCoords
     plant.setCoords(coords);
 
+    // sprout
+    plant.sprout();
+
     return plant;
   }
 
@@ -167,7 +170,6 @@ const Habitat = () => {
       resources[i].move();
     }
     if (plant !== null) {
-      console.log('Ticking the plant');
       plant.tick();
     }
 
