@@ -54,10 +54,31 @@ const Plant = (midpoint, midline) => {
       'newShoot': newShoot,
       'newRoot': newRoot,
       'bloom': bloom,
+      'blossom': () => doFlowerVerb('blossom'),
+      'fertilize': () => doFlowerVerb('fertilize'),
+      'fruit': () => doFlowerVerb('fruit'),
+      'ripen': () => doFlowerVerb('ripen'),
+      'disperse': () => doFlowerVerb('disperse'),
     }
 
     const result = verbs[verb]();
     return result;
+  }
+
+  const doFlowerVerb = (verb) => {
+    // iterate through flowers
+    for (let i = 0; i < flowers.length; i++) {
+      // see if it's available
+      if (flowers[i].getNextVerb() === verb && flowers[i].isVerbReady()) {
+        // do it
+        flowers[i].doVerb(verb);
+        // update coords
+        coords[flowers[i].getCoord()] = flowers[i].getStage();
+
+        return true;
+      }
+    }
+    return false;
   }
 
   // verbs
@@ -158,7 +179,7 @@ const Plant = (midpoint, midline) => {
     const flowerCoord = availableFlowerCoords[Math.floor(Math.random() * availableFlowerCoords.length)];
 
     // make new Flower()
-    const flower = Flower();
+    const flower = Flower(flowerCoord);
     flowers.push(flower);
 
     // update coords

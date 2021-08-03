@@ -492,3 +492,114 @@ test(`Habitat can call bloom()`, () => {
 });
 
 // flower verbs
+
+const flowerVerbs = [
+  'blossom',
+  'fertilize',
+  'fruit',
+  'ripen',
+  'disperse',
+];
+
+// blossom
+test(`Habitat can make a flower bud blossom after 5 ticks`, () => {
+  const hab = Habitat();
+  hab.createGrid(1,6);
+  hab.createPlant();
+  hab.doVerb('bloom');
+
+  for (let i = 0; i < 5; i++) {
+    hab.tick();
+  }
+
+  hab.doVerb('blossom');
+  
+  const str = hab.toString();
+
+  let expectedStr = '';
+  expectedStr += ' \n';
+  expectedStr += ' \n';
+  expectedStr += '2\n';
+  expectedStr += 'r\n';
+  expectedStr += '.\n';
+  expectedStr += '.\n';
+
+  expect(str).toBe(expectedStr);
+});
+
+// all the others
+test(`Habitat can make a flower go through all the stages`, () => {
+  const hab = Habitat();
+  hab.createGrid(1,6);
+  hab.createPlant();
+  hab.doVerb('bloom');
+
+  for (let i = 0; i < 5; i++) {
+    hab.tick();
+  }
+
+  hab.doVerb('blossom');
+
+  for (let i = 0; i < 5; i++) {
+    hab.tick();
+  }
+
+  hab.doVerb('fertilize');
+
+  for (let i = 0; i < 5; i++) {
+    hab.tick();
+  }
+
+  hab.doVerb('fruit');
+
+  for (let i = 0; i < 5; i++) {
+    hab.tick();
+  }
+
+  hab.doVerb('ripen');
+
+  for (let i = 0; i < 5; i++) {
+    hab.tick();
+  }
+
+  hab.doVerb('disperse');
+  
+  const str = hab.toString();
+
+  let expectedStr = '';
+  expectedStr += ' \n';
+  expectedStr += ' \n';
+  expectedStr += '6\n';
+  expectedStr += 'r\n';
+  expectedStr += '.\n';
+  expectedStr += '.\n';
+
+  expect(str).toBe(expectedStr);
+});
+
+test(`Calling a flower verb from Habitat only changes one flower`, () => {
+  const hab = Habitat();
+  hab.createGrid(1,6);
+  hab.createPlant();
+  hab.doVerb('bloom');
+  hab.doVerb('growShoots');
+  hab.doVerb('bloom');
+
+  for (let i = 0; i < 5; i++) {
+    hab.tick();
+  }
+
+  hab.doVerb('blossom');
+  
+  const str = hab.toString();
+
+  let expectedStr = '';
+  expectedStr += ' \n';
+  expectedStr += '1\n';
+  expectedStr += '2\n';
+  expectedStr += 'r\n';
+  expectedStr += '.\n';
+  expectedStr += '.\n';
+
+  expect(str).toBe(expectedStr);
+});

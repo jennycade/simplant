@@ -1,4 +1,4 @@
-const Flower = () => {
+const Flower = (coord) => {
 
   const stages = {
     'bud': {
@@ -39,6 +39,8 @@ const Flower = () => {
 
   let seeds = 0;
 
+  const getCoord = () => coord;
+
   const getStage = () => { return stage; }
 
   const getSeeds = () => { return seeds }
@@ -72,7 +74,7 @@ const Flower = () => {
     if (getNextVerb() === verb && isVerbReady()) {
       // do it
       incStage();
-    }
+    } // TODO: Throw an error as an else clause (and update tests)
 
     if (stage === 'dispersed seeds') { // TODO: Don't hardcode in this value; check to see if it's the last stage instead
       // disperse some seeds!
@@ -81,6 +83,7 @@ const Flower = () => {
   }
 
   return {
+    getCoord,
     getStage, getSeeds,
     getNextVerb, isVerbReady,
     incTime,
