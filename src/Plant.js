@@ -91,17 +91,29 @@ const Plant = (midpoint, midline) => {
       checkFn = 'isRoot';
     }
 
+    let newCoords = {};
+
     // iterate over the growing tips
     for (let i = 0; i < growingTips.length; i++) {
       if (growingTips[i][checkFn]()) {
         // grow
         const newCoord = growingTips[i].grow();
-        // add new coord to the plant
-        coords[newCoord] = plantPart;
+
+        // check to make sure it's on the board
+        if (Object.keys(coords).includes(newCoord)) {
+          // add new coord to the plant
+          newCoords[newCoord] = plantPart;
+        }
+        
       }
     }
 
-    return true;
+    if (Object.keys(newCoords).length > 0) {
+      Object.assign(coords, newCoords);
+      return true;
+    } else {
+      return false;
+    }
   }
 
   const growShoots = () => {

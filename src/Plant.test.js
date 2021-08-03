@@ -159,6 +159,33 @@ test(`A successful call to growShoots() returns true`, () => {
   expect(result).toBe(true);
 });
 
+test(`Trying to grow beyond the edge of the grid doesn't work and growShoots() returns false`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
+  const plant = hab.createPlant();
+
+  plant.growShoots();
+  plant.growShoots();
+  const result = plant.growShoots();
+  
+  expect(result).toBe(false);
+});
+
+// test(`If one tip can grow but another can't, growShoots() returns true`, () => {
+//   const hab = Habitat();
+//   hab.createGrid(5,6);
+//   const plant = hab.createPlant();
+
+//   plant.growShoots();
+//   plant.newShoot(); // No way to guarantee it is lower than the apical meristem
+//   plant.growShoots();
+//   const result = plant.growShoots();
+
+//   console.table(plant.getCoords());
+  
+//   expect(result).toBe(false);
+// });
+
 // growRoots()
 test(`Plant has function growRoots()`, () => {
   const plant = Plant();
