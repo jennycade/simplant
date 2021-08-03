@@ -577,7 +577,7 @@ test(`Habitat can make a flower go through all the stages`, () => {
   expect(str).toBe(expectedStr);
 });
 
-test(`Habitat returns the number of dispersed seeds after putting a flower through all stages`, () => {
+test(`Habitat can get the number of dispersed seeds after putting a flower through all stages`, () => {
   const hab = Habitat();
   hab.createGrid(1,6);
   hab.createPlant();
@@ -643,4 +643,77 @@ test(`Calling a flower verb from Habitat only changes one flower`, () => {
   expectedStr += '.\n';
 
   expect(str).toBe(expectedStr);
+});
+
+test(`Habitat can put two flowers through all stages and get the number of seeds`, () => {
+  const hab = Habitat();
+  hab.createGrid(1,6);
+  hab.createPlant();
+  hab.doVerb('growShoots');
+  hab.doVerb('bloom');
+  hab.doVerb('bloom');
+
+  for (let i = 0; i < 5; i++) {
+    hab.tick();
+  }
+
+  hab.doVerb('blossom');
+  hab.doVerb('blossom');
+
+  for (let i = 0; i < 5; i++) {
+    hab.tick();
+  }
+
+  hab.doVerb('fertilize');
+  hab.doVerb('fertilize');
+
+  for (let i = 0; i < 5; i++) {
+    hab.tick();
+  }
+
+  hab.doVerb('fruit');
+  hab.doVerb('fruit');
+
+  for (let i = 0; i < 5; i++) {
+    hab.tick();
+  }
+
+  hab.doVerb('ripen');
+  hab.doVerb('ripen');
+
+  for (let i = 0; i < 5; i++) {
+    hab.tick();
+  }
+
+  hab.doVerb('disperse');
+  hab.doVerb('disperse');
+
+  const seeds = hab.getSeeds();
+
+  expect(seeds).toBe(200);
+});
+
+
+////////////// available verbs
+
+// growShoots
+test(`growShoots is an available verb if there's a plant`, () => {
+  const hab = Habitat();
+  hab.createGrid(1,6);
+  hab.createPlant();
+
+  const verbs = hab.getReadyVerbs();
+
+  expect(verbs).toContain('growShoots');
+});
+
+// growRoots
+test(`growRoots is an available verb if there's a plant`, () => {
+  const hab = Habitat();
+  hab.createGrid(1,6);
+  hab.createPlant();
+
+  const verbs = hab.getReadyVerbs();
+
+  expect(verbs).toContain('growRoots');
 });

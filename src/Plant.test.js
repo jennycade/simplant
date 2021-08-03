@@ -290,6 +290,18 @@ test(`A successful call to newShoot() returns true`, () => { // TODO: Consider r
   expect(result).toBe(true);
 });
 
+test(`An unsuccessful call to newShoot() returns false`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
+  const plant = hab.createPlant();
+
+  plant.newShoot();
+  plant.newShoot();
+  const result = plant.newShoot();
+
+  expect(result).toBe(false);
+});
+
 // newRoot()
 test(`Plant has function newRoot()`, () => {
   const plant = Plant();

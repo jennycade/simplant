@@ -140,24 +140,29 @@ const Plant = (midpoint, midline) => {
     // subtract usedOrigins from potentialOrigins
     const availableOrigins = potentialOrigins.filter(x => !usedOrigins.includes(x));
 
-    // choose an origin randomly
-    const origin = availableOrigins[Math.floor(Math.random() * availableOrigins.length)];
+    if (availableOrigins.length > 0) {
 
-    // make a new GrowingTip()
+      // choose an origin randomly
+      const origin = availableOrigins[Math.floor(Math.random() * availableOrigins.length)];
 
-    // parse the origin: 'x,yul'
-    // TODO: consider writing a parseOriginCode() function (But this might be the only place it gets used)
-    const coord = origin.substring(0, origin.length - 2);
-    const dir = origin.substring(origin.length - 2);
+      // make a new GrowingTip()
 
-    // add to growing tips
-    const newTip = GrowingTip(coord, dir);
-    growingTips.push(newTip);
+      // parse the origin: 'x,yul'
+      // TODO: consider writing a parseOriginCode() function (But this might be the only place it gets used)
+      const coord = origin.substring(0, origin.length - 2);
+      const dir = origin.substring(origin.length - 2);
 
-    // add origin to usedOrigins
-    usedOrigins.push(origin);
+      // add to growing tips
+      const newTip = GrowingTip(coord, dir);
+      growingTips.push(newTip);
 
-    return true;
+      // add origin to usedOrigins
+      usedOrigins.push(origin);
+
+      return true;
+    } else {
+      return false;
+    }
   }
 
   const newShoot = () => {

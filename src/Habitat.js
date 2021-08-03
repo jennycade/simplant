@@ -172,8 +172,6 @@ const Habitat = () => {
     if (plant !== null) {
       plant.tick();
     }
-
-    // TODO: refreshes map (?)
   }
 
   const toString = () => { // for development
@@ -234,11 +232,22 @@ const Habitat = () => {
 
   const doVerb = (verb) => {
     return plant.doVerb(verb);
+    // TODO: refreshes map (?)
+    // TODO: refresh readyVerbs
   }
 
   const getSeeds = () => plant.getSeeds();
 
   const getPlant = () => plant;
+
+  const getReadyVerbs = () => {
+    const readyVerbs = [];
+    if (plant) {
+      readyVerbs.push('growShoots');
+      readyVerbs.push('growRoots');
+    }
+    return readyVerbs;
+  }
 
   return {
     createGrid,
@@ -252,6 +261,7 @@ const Habitat = () => {
     doVerb,
     getSeeds,
     getPlant,
+    getReadyVerbs,
   }
 }
 
