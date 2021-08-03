@@ -577,6 +577,47 @@ test(`Habitat can make a flower go through all the stages`, () => {
   expect(str).toBe(expectedStr);
 });
 
+test(`Habitat returns the number of dispersed seeds after putting a flower through all stages`, () => {
+  const hab = Habitat();
+  hab.createGrid(1,6);
+  hab.createPlant();
+  hab.doVerb('bloom');
+
+  for (let i = 0; i < 5; i++) {
+    hab.tick();
+  }
+
+  hab.doVerb('blossom');
+
+  for (let i = 0; i < 5; i++) {
+    hab.tick();
+  }
+
+  hab.doVerb('fertilize');
+
+  for (let i = 0; i < 5; i++) {
+    hab.tick();
+  }
+
+  hab.doVerb('fruit');
+
+  for (let i = 0; i < 5; i++) {
+    hab.tick();
+  }
+
+  hab.doVerb('ripen');
+
+  for (let i = 0; i < 5; i++) {
+    hab.tick();
+  }
+
+  hab.doVerb('disperse');
+
+  const seeds = hab.getSeeds();
+
+  expect(seeds).toBe(100);
+});
+
 test(`Calling a flower verb from Habitat only changes one flower`, () => {
   const hab = Habitat();
   hab.createGrid(1,6);

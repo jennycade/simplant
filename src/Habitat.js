@@ -233,8 +233,10 @@ const Habitat = () => {
   }
 
   const doVerb = (verb) => {
-    plant.doVerb(verb);
+    return plant.doVerb(verb);
   }
+
+  const getSeeds = () => plant.getSeeds();
 
   const getPlant = () => plant;
 
@@ -248,6 +250,7 @@ const Habitat = () => {
     tick,
     toString,
     doVerb,
+    getSeeds,
     getPlant,
   }
 }

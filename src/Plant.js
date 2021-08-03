@@ -200,6 +200,17 @@ const Plant = (midpoint, midline) => {
     }
   }
 
+  const getSeeds = () => {
+    // returns total number of seeds from all flowers
+    // TODO: rewrite as a var that gets updated when a flower disperses seeds
+    let seeds = 0;
+    for (let i = 0; i < flowers.length; i++) {
+      seeds += flowers[i].getSeeds();
+    }
+
+    return seeds;
+  }
+
   // for dev: count cells
   const countCells = (type) => {
     let numShootCells = 0;
@@ -285,6 +296,7 @@ const Plant = (midpoint, midline) => {
     newShoot, newRoot,
     bloom,
     tick,
+    getSeeds,
 
     countCells,
     toString,
