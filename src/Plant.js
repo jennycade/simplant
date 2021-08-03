@@ -101,7 +101,7 @@ const Plant = (midpoint, midline) => {
 
         // check to make sure it's on the board
         if (Object.keys(coords).includes(newCoord)) {
-          // add new coord to the plant
+          // get ready to add new coord to the plant
           newCoords[newCoord] = plantPart;
         }
         
@@ -109,9 +109,10 @@ const Plant = (midpoint, midline) => {
     }
 
     if (Object.keys(newCoords).length > 0) {
+      // add new coords to the plant
       Object.assign(coords, newCoords);
       return true;
-    } else {
+    } else { // growth would have gone off the board
       return false;
     }
   }

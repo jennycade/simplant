@@ -159,7 +159,7 @@ test(`A successful call to growShoots() returns true`, () => {
   expect(result).toBe(true);
 });
 
-test(`Trying to grow beyond the edge of the grid doesn't work and growShoots() returns false`, () => {
+test(`Trying to grow shoots beyond the edge of the grid doesn't work and growShoots() returns false`, () => {
   const hab = Habitat();
   hab.createGrid(5,6);
   const plant = hab.createPlant();
@@ -248,6 +248,18 @@ test(`A successful call to growRoots() returns true`, () => {
   const result = plant.growRoots();
 
   expect(result).toBe(true);
+});
+
+test(`Trying to grow roots beyond the edge of the grid doesn't work and growRoots() returns false`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
+  const plant = hab.createPlant();
+
+  plant.growRoots();
+  plant.growRoots();
+  const result = plant.growRoots();
+  
+  expect(result).toBe(false);
 });
 
 // newShoot()
