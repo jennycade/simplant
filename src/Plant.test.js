@@ -427,6 +427,17 @@ test(`Successful call to bloom() returns a flower object`, () => {
   expect(result).toMatchObject(expect.any(Object));
 });
 
+test(`An unsuccessful call to bloom() returns false`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
+  const plant = hab.createPlant();
+
+  plant.bloom();
+  const result = plant.bloom();
+
+  expect(result).toBe(false);
+});
+
 test(`When bloom() is called, one shoot cell switches to a flower cell`, () => {
   const hab = Habitat();
   hab.createGrid(5,6);

@@ -195,18 +195,22 @@ const Plant = (midpoint, midline) => {
     }
 
     const flowerCoord = availableFlowerCoords[Math.floor(Math.random() * availableFlowerCoords.length)];
+    if (flowerCoord) {
+      // make new Flower()
+      const flower = Flower(flowerCoord);
+      flowers.push(flower);
 
-    // make new Flower()
-    const flower = Flower(flowerCoord);
-    flowers.push(flower);
+      // update coords
+      coords[flowerCoord] = flower.getStage(); // TODO: update by stage
 
-    // update coords
-    coords[flowerCoord] = flower.getStage(); // TODO: update by stage
+      // add to usedFlowerCoords
+      usedFlowerCoords.push(flowerCoord);
 
-    // add to usedFlowerCoords
-    usedFlowerCoords.push(flowerCoord);
-
-    return flower;
+      return flower;
+    } else {
+      // no space to flower
+      return false;
+    }
   }
 
   const getCoords = () => coords;
