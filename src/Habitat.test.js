@@ -271,6 +271,33 @@ test(`toString() displays flowers`, () => {
   expect(str).toEqual(expectedStr);
 });
 
+// test(`toString() reflects flower stage after doVerb()`, () => {
+//   const hab = Habitat();
+//   hab.createGrid(1, 6);
+
+//   const plant = hab.createPlant();
+//   // plant.sprout();
+//   const flower = plant.bloom();
+
+//   for (let i = 0; i < 5; i++) {
+//     hab.tick();
+//   }
+  
+//   flower.doVerb('blossom');
+
+//   const str = hab.toString();
+
+//   let expectedStr = '';
+//   expectedStr += ' \n';
+//   expectedStr += ' \n';
+//   expectedStr += '2\n';
+//   expectedStr += 'r\n';
+//   expectedStr += '.\n';
+//   expectedStr += '.\n';
+
+//   expect(str).toEqual(expectedStr);
+// });
+
 ////////////// tick()
 test(`Habitat has function tick()`, () => {
   const hab = Habitat();
@@ -378,3 +405,90 @@ test(`Plant sprouts upon creation`, () => {
 
   expect(str).toBe(expectedStr);
 });
+
+// TODO: Write test for each user action through Habitat
+
+// growShoots
+test(`Habitat can call growShoots()`, () => {
+  const hab = Habitat();
+  hab.createGrid(1,6);
+
+  hab.createPlant();
+  hab.doVerb('growShoots');
+
+  const str = hab.toString();
+
+  let expectedStr = '';
+  expectedStr += ' \n';
+  expectedStr += 's\n';
+  expectedStr += 's\n';
+  expectedStr += 'r\n';
+  expectedStr += '.\n';
+  expectedStr += '.\n';
+
+  expect(str).toBe(expectedStr);
+});
+
+// growRoots
+test(`Habitat can call growRoots()`, () => {
+  const hab = Habitat();
+  hab.createGrid(1,6);
+
+  hab.createPlant();
+  hab.doVerb('growRoots');
+
+  const str = hab.toString();
+
+  let expectedStr = '';
+  expectedStr += ' \n';
+  expectedStr += ' \n';
+  expectedStr += 's\n';
+  expectedStr += 'r\n';
+  expectedStr += 'r\n';
+  expectedStr += '.\n';
+
+  expect(str).toBe(expectedStr);
+});
+
+// newShoot
+test(`Habitat can call newShoot()`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
+
+  const plant = hab.createPlant();
+  hab.doVerb('newShoot');
+  hab.doVerb('growShoots');
+
+  const shootCells = plant.countCells('shoot');
+
+  expect(shootCells).toBe(3);
+});
+
+// newRoot
+test(`Habitat can call newRoot()`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
+
+  const plant = hab.createPlant();
+  hab.doVerb('newRoot');
+  hab.doVerb('growRoots');
+
+  const rootCells = plant.countCells('root');
+
+  expect(rootCells).toBe(3);
+});
+
+// bloom
+test(`Habitat can call bloom()`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
+  
+  const plant = hab.createPlant();
+  hab.doVerb('bloom');
+
+  const flowerCells = plant.countCells('flower');
+
+  expect(flowerCells).toBe(1);
+});
+
+// flower verbs

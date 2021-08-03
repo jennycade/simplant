@@ -47,6 +47,20 @@ const Plant = (midpoint, midline) => {
   }
 
   // user growth actions
+  const doVerb = (verb) => {
+    const verbs = {
+      'growShoots': () => grow('shoot'),
+      'growRoots': () => grow('root'),
+      'newShoot': newShoot,
+      'newRoot': newRoot,
+      'bloom': bloom,
+    }
+
+    const result = verbs[verb]();
+    return result;
+  }
+
+  // verbs
   const grow = (plantPart) => {
     let checkFn;
     if (plantPart === 'shoot') {
@@ -245,6 +259,7 @@ const Plant = (midpoint, midline) => {
     containsShoot,
     containsRoot,
     // TODO: write containsFlower
+    doVerb,
     growShoots, growRoots,
     newShoot, newRoot,
     bloom,
