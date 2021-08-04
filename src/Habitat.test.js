@@ -190,7 +190,7 @@ test(`Habitat.toString() renders environment + plant`, () => {
   const hab = Habitat();
   hab.createGrid(5,6);
 
-  const plant = hab.createPlant();
+  hab.createPlant();
   // plant.sprout();
 
   const str = hab.toString();
@@ -210,7 +210,7 @@ test(`Habitat.toString() renders environment, plant, and sun`, () => {
   const hab = Habitat();
   hab.createGrid(1,6);
 
-  const plant = hab.createPlant();
+  hab.createPlant();
   // plant.sprout();
 
   hab.createSun();
@@ -232,7 +232,7 @@ test(`Habitat.toString() renders environment, plant, and water`, () => {
   const hab = Habitat();
   hab.createGrid(1,6);
 
-  const plant = hab.createPlant();
+  hab.createPlant();
   // plant.sprout();
 
   hab.createWater();
@@ -493,13 +493,13 @@ test(`Habitat can call bloom()`, () => {
 
 // flower verbs
 
-const flowerVerbs = [
-  'blossom',
-  'fertilize',
-  'fruit',
-  'ripen',
-  'disperse',
-];
+// const flowerVerbs = [
+//   'blossom',
+//   'fertilize',
+//   'fruit',
+//   'ripen',
+//   'disperse',
+// ];
 
 // blossom
 test(`Habitat can make a flower bud blossom after 5 ticks`, () => {
@@ -694,26 +694,120 @@ test(`Habitat can put two flowers through all stages and get the number of seeds
 });
 
 
-////////////// available verbs
+////////////// ready verbs
 
-// growShoots
-test(`growShoots is an available verb if there's a plant`, () => {
+test(`Immediately after blooming, getFlowerVerbs() returns ['blossom'] for nextVerb and [] for readyVerbs`, () => {
   const hab = Habitat();
   hab.createGrid(1,6);
   hab.createPlant();
+  hab.doVerb('bloom');
 
-  const verbs = hab.getReadyVerbs();
+  let [nextVerbs, readyVerbs] = hab.getFlowerVerbs();
 
-  expect(verbs).toContain('growShoots');
+  expect(nextVerbs).toContain('blossom');
+  expect(readyVerbs).toEqual([]);
 });
 
-// growRoots
-test(`growRoots is an available verb if there's a plant`, () => {
+test(`getFlowerVerbs() works throughout the stages of a single flower`, () => {
   const hab = Habitat();
   hab.createGrid(1,6);
   hab.createPlant();
+  hab.doVerb('bloom');
 
-  const verbs = hab.getReadyVerbs();
+  for (let i = 0; i < 5; i++) {
+    hab.tick();
+  }
 
-  expect(verbs).toContain('growRoots');
+  let [nextVerbs, readyVerbs] = hab.getFlowerVerbs();
+
+  expect(nextVerbs).toEqual(['blossom']);
+  expect(readyVerbs).toEqual(['blossom']);
+
+  hab.doVerb('blossom');
+
+  [nextVerbs, readyVerbs] = hab.getFlowerVerbs();
+
+  expect(nextVerbs).toEqual(['fertilize']);
+  expect(readyVerbs).toEqual([]);
+
+  for (let i = 0; i < 5; i++) {
+    hab.tick();
+  }
+
+  [nextVerbs, readyVerbs] = hab.getFlowerVerbs();
+
+  expect(nextVerbs).toEqual(['fertilize']);
+  expect(readyVerbs).toEqual(['fertilize']);
+
+  hab.doVerb('fertilize');
+
+  for (let i = 0; i < 5; i++) {
+    hab.tick();
+  }
+
+  hab.doVerb('fruit');
+
+  for (let i = 0; i < 5; i++) {
+    hab.tick();
+  }
+
+  hab.doVerb('ripen');
+
+  for (let i = 0; i < 5; i++) {
+    hab.tick();
+  }
+
+  [nextVerbs, readyVerbs] = hab.getFlowerVerbs();
+
+  expect(nextVerbs).toEqual(['disperse']);
+  expect(readyVerbs).toEqual(['disperse']);
+
+  hab.doVerb('disperse');
+
+  [nextVerbs, readyVerbs] = hab.getFlowerVerbs();
+
+  expect(nextVerbs).toEqual([]);
+  expect(readyVerbs).toEqual([]);
+
+});
+
+// test multiple flowers at different stages; want unique list
+test(`When multiple flowers are at the same stage, nextVerbs and readyVerbs contain unique items`, () => {
+  const hab = Habitat();
+  hab.createGrid(1,6);
+  hab.createPlant();
+  hab.doVerb('growShoots');
+  hab.doVerb('bloom');
+  hab.doVerb('bloom');
+
+  let [nextVerbs, readyVerbs] = hab.getFlowerVerbs();
+
+  expect(nextVerbs).toEqual(['blossom']);
+  expect(readyVerbs).toEqual([]);
+});
+
+test(`When multiple flowers are at different stages, nextVerbs and readyVerbs show verbs for all flowers`, () => {
+  const hab = Habitat();
+  hab.createGrid(1,6);
+  hab.createPlant();
+  hab.doVerb('growShoots');
+  hab.doVerb('bloom');
+  hab.doVerb('bloom');
+
+  for (let i = 0; i < 5; i++) {
+    hab.tick();
+  }
+
+  let [nextVerbs, readyVerbs] = hab.getFlowerVerbs();
+
+  expect(nextVerbs).toEqual(['blossom']);
+  expect(readyVerbs).toEqual(['blossom']);
+
+  hab.doVerb('blossom');
+
+  [nextVerbs, readyVerbs] = hab.getFlowerVerbs();
+
+  expect(nextVerbs).toEqual(['fertilize', 'blossom']);
+  expect(readyVerbs).toEqual(['blossom']);
+
 });

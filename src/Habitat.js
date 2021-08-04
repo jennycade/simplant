@@ -106,7 +106,7 @@ const Habitat = () => {
   const getMidline = () => midline;
 
   const getAbiotic = (coord) => {
-    const [x, y] = parseCoord(coord);
+    const y = parseCoord(coord)[1];
     if (y < soilLine) {
       return 'air';
     } else {
@@ -240,13 +240,12 @@ const Habitat = () => {
 
   const getPlant = () => plant;
 
-  const getReadyVerbs = () => {
-    const readyVerbs = [];
+  const getFlowerVerbs = () => {
     if (plant) {
-      readyVerbs.push('growShoots');
-      readyVerbs.push('growRoots');
+      return plant.getFlowerVerbs();
+    } else {
+      return false;
     }
-    return readyVerbs;
   }
 
   return {
@@ -261,7 +260,7 @@ const Habitat = () => {
     doVerb,
     getSeeds,
     getPlant,
-    getReadyVerbs,
+    getFlowerVerbs,
   }
 }
 

@@ -30,10 +30,11 @@ const Plant = (midpoint, midline) => {
     return coords[coord] === 'root';
   }
 
-  // sprout!
-  // make two growing tips: one shoot and one root
-  // two pixels at the middle of the grid
+  
   const sprout = () => {
+    // sprout!
+    // make two growing tips: one shoot and one root
+    // two pixels at the middle of the grid
 
     // growing tips
     const shootMeristem = GrowingTip(midpoint.shoot, 'u');
@@ -63,6 +64,28 @@ const Plant = (midpoint, midline) => {
 
     const result = verbs[verb]();
     return result;
+  }
+
+  const getFlowerVerbs = () => { // TODO: Make sure Habitat has this info on every tick
+    // returns [nextVerbs, readyVerbs]
+    let nextVerbs = [];
+    let readyVerbs = [];
+    // iterate through flowers
+    for (let i = 0; i < flowers.length; i++) {
+      const nextVerb = flowers[i].getNextVerb();
+      // unique and not null?
+      if (! nextVerbs.includes(nextVerb) && nextVerb) {
+        nextVerbs.push(nextVerb);
+      }
+      // available?
+      if (flowers[i].isVerbReady()) {
+        // unique and not null?
+        if (! readyVerbs.includes(nextVerb) && nextVerb) {
+          readyVerbs.push(nextVerb);
+        }
+      }
+    }
+    return [nextVerbs, readyVerbs];
   }
 
   const doFlowerVerb = (verb) => {
@@ -314,6 +337,7 @@ const Plant = (midpoint, midline) => {
     containsRoot,
     // TODO: write containsFlower
     doVerb,
+    getFlowerVerbs,
     growShoots, growRoots,
     newShoot, newRoot,
     bloom,

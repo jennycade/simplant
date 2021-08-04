@@ -27,9 +27,9 @@ const Flower = (coord) => {
       nextStage: 'dispersed seeds',
     },
     'dispersed seeds': {
-      nextVerb: '',
+      nextVerb: null,
       minTime: 5,
-      nextStage: '',
+      nextStage: null,
     },
   };
 
