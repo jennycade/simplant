@@ -1,3 +1,29 @@
 .App {
   text-align: center;
 }
+
+.habitat {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+}
+
+/* pixel colors */
+.soil {
+  background-color: brown;
+}
+.air {
+  background-color: aqua;
+}
+.shoot {
+  background-color: green;
+}
+.root {
+  background-color: tan;
+}
+/* TODO: flowers! */
+.sun {
+  background-color: yellow;
+}
+.water {
+  background-color: blue;
+}

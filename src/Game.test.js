@@ -18,4 +18,31 @@ test(`Once a game is initiated, a user can grow the plant's shoot`, () => {
 });
 
 /////////// verbs
-// test(``)
+test(`Game can do all the verbs (excluding flowers)`, () => {
+  const game = Game();
+  game.init();
+
+  let results = [];
+
+  const verbs = ['growShoots', 'growRoots', 'newShoot', 'newRoot', 'bloom'];
+
+  for (let i = 0; i < verbs.length; i++) {
+    const verb = verbs[i];
+    results.push(game.doVerb(verb));
+  }
+
+  const expectedResults = [true, true, true, true, expect.any(Object)];
+
+  expect(results).toEqual(expectedResults);
+});
+
+/////////////// more things Game has to do
+// keep track of time
+
+// randomly send out resources
+
+// check to make sure energy is sufficient before carrying out doVerb()
+
+// deduct energy when carrying out doVerb()
+
+// if doVerb() returns false, refund the energy and (maybe) display a message about why it failed

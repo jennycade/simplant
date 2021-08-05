@@ -17,6 +17,8 @@ const Habitat = () => {
   let sunCoords = [];
   let waterCoords = [];
 
+  let map = {};
+
   const setMidpoint = () => { 
     const [xmax, ymax] = parseCoord(maxCoord);
   
@@ -164,6 +166,10 @@ const Habitat = () => {
     return map;
   }
 
+  const getMap = () => {
+    return mapCoords();
+  }
+
   const tick = () => {
     // moves all resources
     for (let i = 0; i < resources.length; i++) {
@@ -248,6 +254,8 @@ const Habitat = () => {
     }
   }
 
+  const getCoords = () => coords;
+
   return {
     createGrid,
     createPlant,
@@ -257,10 +265,12 @@ const Habitat = () => {
     getResources,
     tick,
     toString,
+    getMap,
     doVerb,
     getSeeds,
     getPlant,
     getFlowerVerbs,
+    getCoords,
   }
 }
 
