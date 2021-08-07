@@ -15,6 +15,7 @@ const App = () => {
   const [energy, setEnergy] = useState(0);
   const [time, setTime] = useState(0);
   const [timer, setTimer] = useState(0);
+  const [seeds, setSeeds] = useState(0);
 
   const [readyVerbs, setReadyVerbs] = useState([]); // TODO: START HERE NEXT TIME
 
@@ -30,6 +31,7 @@ const App = () => {
     setGame(newGame);
     setMap(newGame.getMap());
     setEnergy(newGame.getEnergy());
+    setSeeds(newGame.getSeeds());
     setReadyVerbs(newGame.getReadyVerbs());
 
     setTimer(setInterval( () => tick(newGame), timeStepMS));
@@ -55,7 +57,9 @@ const App = () => {
     
     // update everything
     setMap(game.getMap());
-    setEnergy(game.getEnergy);
+    setReadyVerbs(game.getReadyVerbs());
+    setEnergy(game.getEnergy());
+    setSeeds(game.getSeeds());
   }
 
   const renderMap = () => {
@@ -67,6 +71,14 @@ const App = () => {
 
       if (map[coord].plant) {
         pixelDisplay = map[coord].plant;
+      }
+
+      // flowers
+      if (['flower', 'fertilized flower'].includes(map[coord].plant)) {
+        text = '🌸';
+      }
+      if (['fruit', 'ripe fruit'].includes(map[coord].plant)) {
+        text = '🍓';
       }
 
       if (map[coord].resource) {
@@ -130,6 +142,7 @@ const App = () => {
           <button onClick={ newGame }>New Game</button>
           <div className="energy">Energy: { energy }</div>
           <div className="time">Day: { time }</div>
+          <div className="seeds">Seeds: { seeds }</div>
         </div>
         { renderMap() }
         { renderActions() }

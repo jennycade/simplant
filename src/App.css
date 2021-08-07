@@ -50,6 +50,11 @@
   color: red;
 }
 
+.dispersed {
+  background-color: rosybrown;
+  color: rosybrown;
+}
+
 .actions {
   width: 50vw;
   float: right;
