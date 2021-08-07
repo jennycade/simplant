@@ -7,8 +7,11 @@ import './App.css';
 const XMAX = 9;
 const YMAX = 9;
 const timeStepMS = 2000;
+const SEASON = 200;
 
 const App = () => {
+  const [display, setDisplay] = useState('new');
+
   const [game, setGame] = useState({});
   const [map, setMap] = useState({});
   
@@ -24,6 +27,8 @@ const App = () => {
     if (timer) {
       clearInterval(timer);
     }
+
+    setDisplay('play');
 
     const newGame = Game();
     newGame.init(XMAX + 1, YMAX + 1);
@@ -41,10 +46,15 @@ const App = () => {
     // make game tick
     gameToTick.tick();
 
-    // update
-    setMap(gameToTick.getMap());
-    setTime(gameToTick.getTime());
-    setReadyVerbs(gameToTick.getReadyVerbs());
+    // is the season over?
+    if (gameToTick.getTime() > SEASON) {
+      endGame();
+    } else {
+      // update
+      setMap(gameToTick.getMap());
+      setTime(gameToTick.getTime());
+      setReadyVerbs(gameToTick.getReadyVerbs());
+    }
   }
 
   const doVerb = (verb) => {
@@ -114,12 +124,16 @@ const App = () => {
     console.log('Harvested resource');
   }
 
+  const endGame = () => {
+    setDisplay('end');
+  }
+
   const renderActions = () => {
 
     const actions = (
       <div className="actions">
         { readyVerbs.map( verb => <button key={ verb.verb } onClick={ () => doVerb(verb.verb) } >
-          { verb.verb } ({ verb.cost })
+          { verb.verb } ⚡️{ verb.cost }
           </button> )}
       </div>
     );
@@ -129,7 +143,7 @@ const App = () => {
 
   /////////////
   // render
-  if (Object.keys(game).length === 0) { // no game
+  if (display === 'new' || Object.keys(game).length === 0) { // no game
     return (
       <div className="App">
         <button onClick={ newGame }>New Game</button>
@@ -140,12 +154,12 @@ const App = () => {
       <div className="App">
         <div className="infobar">
           <button onClick={ newGame }>New Game</button>
-          <div className="energy">Energy: { energy }</div>
-          <div className="time">Day: { time }</div>
-          <div className="seeds">Seeds: { seeds }</div>
+          <div className="energy">Energy: ⚡️{ energy }</div>
+          <div className="time">Day: 🕑 { time }</div>
+          <div className="seeds">Seeds: 🌰 { seeds }</div>
         </div>
         { renderMap() }
-        { renderActions() }
+        { display === 'play' ? renderActions() : `The growing season is over. Your plant dispersed ${seeds} 🌰 seeds this season.` }
       </div>
     );
   }

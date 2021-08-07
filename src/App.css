@@ -1,6 +1,7 @@
 .App {
   text-align: center;
   width: 100vw;
+  height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
@@ -17,8 +18,8 @@
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
 
-  width: 50vw;
-  height: 50vw;
+  width: 80vh;
+  height: 80vh;
 }
 
 .habitat div {
@@ -45,9 +46,13 @@
   color: tan;
 }
 /* TODO: flowers! */
-.bud, .flower, .fruit, .dispersed {
+.fruit{
   background-color: red;
   color: red;
+}
+.bud, .flower {
+  background-color: pink;
+  color: pink;
 }
 
 .dispersed {
@@ -56,9 +61,7 @@
 }
 
 .actions {
-  width: 50vw;
-  float: right;
-  clear: right;
+  height: 80vh;
 
   display: flex;
   flex-direction: column;
