@@ -178,9 +178,17 @@ const Habitat = () => {
 
   const tick = () => {
     // moves all resources
+    const resourcesToRemove = [];
     for (let i = 0; i < resources.length; i++) {
       resources[i].move();
+      // if resource is no longer in a legal space, mark it for removal
+      if (! resources[i].areCoordsLegal()) {
+        resourcesToRemove.push(resources[i]); // mark for removal
+      }
     }
+    // remove all marked resources
+    resources = resources.filter(resource => ! resourcesToRemove.includes(resource));
+    
     if (plant !== null) {
       plant.tick();
     }

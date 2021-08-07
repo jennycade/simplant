@@ -27,6 +27,16 @@ const Resource = (type, legalCoords) => {
     return legal;
   }
 
+  const areCoordsLegal = () => {
+    for (let i = 0; i < coords.length; i++) {
+      const [x, y] = parseCoord(coords[i]);
+      if (x < xmin || x > xmax || y < ymin || y > ymax) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   const move = () => {
     // set change in position
     let xdiff, ydiff, newCoords;
@@ -61,6 +71,7 @@ const Resource = (type, legalCoords) => {
 
   return {
     move,
+    areCoordsLegal,
     getCoords,
     getType
   }

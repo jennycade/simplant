@@ -168,6 +168,22 @@ test(`Calling createWater makes resources length 1`, () => {
   expect(res.length).toBe(1);
 });
 
+test(`Resource doesn't exist after it goes off the board`, () => {
+  const hab = Habitat();
+  hab.createGrid(5,6);
+  
+  hab.createSun();
+  
+  hab.tick();
+  hab.tick();
+  hab.tick();
+  hab.tick();
+
+  const res = hab.getResources();
+
+  expect(res.length).toBe(0);
+});
+
 
 ///////////// toString()
 test(`Habitat.toString() returns the expected string for a blank grid.`, () => {
