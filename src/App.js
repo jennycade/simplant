@@ -20,7 +20,7 @@ const App = () => {
   const [timer, setTimer] = useState(0);
   const [seeds, setSeeds] = useState(0);
 
-  const [readyVerbs, setReadyVerbs] = useState([]); // TODO: START HERE NEXT TIME
+  const [readyVerbs, setReadyVerbs] = useState([]);
 
   const newGame = () => {
     // first kill the old game;
@@ -72,6 +72,26 @@ const App = () => {
     setSeeds(game.getSeeds());
   }
 
+  const harvestResource = (coord) => {
+    // do it in the game
+    game.harvestResource( coord );
+
+    // update map and energy
+    setMap(game.getMap());
+    setEnergy(game.getEnergy());
+
+    console.log('Harvested resource');
+  }
+
+  const endGame = () => {
+    // kill the game
+    if (timer) {
+      clearInterval(timer);
+    }
+    // update display
+    setDisplay('end');
+  }
+
   const renderMap = () => {
     let habitat = game.getCoords().map( (coord) => {
       // environment
@@ -113,26 +133,6 @@ const App = () => {
     return <div className="habitat">{ habitat }</div>;
   }
 
-  const harvestResource = (coord) => {
-    // do it in the game
-    game.harvestResource( coord );
-
-    // update map and energy
-    setMap(game.getMap());
-    setEnergy(game.getEnergy());
-
-    console.log('Harvested resource');
-  }
-
-  const endGame = () => {
-    // kill the game
-    if (timer) {
-      clearInterval(timer);
-    }
-    // update display
-    setDisplay('end');
-  }
-
   const renderActions = () => {
 
     const actions = (
@@ -146,6 +146,37 @@ const App = () => {
     return actions;
   }
 
+  const showInstructions = () => {
+    // pause
+    // kill the timer
+    if (timer) {
+      clearInterval(timer);
+    }
+
+    // change display
+    setDisplay('instructions');
+  }
+
+  const hideInstructions = () => {
+    // set display
+    setDisplay('play');
+
+    // unpause
+    setTimer(setInterval( () => tick(game), timeStepMS));
+  }
+
+  const instructions = (
+    <div className="instructions">
+      <p>Welcome to Pixel Plant!</p>
+      <p>It's spring, and your pixel plant seed has just sprouted.</p>
+      <p>As a plant, you need to soak up sunlight from your shoots and water from your roots to store ⚡️ energy in the form of sugar.</p>
+      <p>Use stored ⚡️ energy to grow, bloom new 🌸 flowers, and make those flowers form 🍓 fruits and disperse 🌰 seeds.</p>
+
+      <p>How many 🌰 seeds can you disperse before the end of the growing season in 200 days?</p>
+      <button onClick={ hideInstructions }>Start growing</button>
+    </div>
+  );
+
   /////////////
   // render
   if (display === 'new' || Object.keys(game).length === 0) { // no game
@@ -158,13 +189,14 @@ const App = () => {
     return (
       <div className="App">
         <div className="infobar">
-          <button onClick={ newGame }>New Game</button>
+          <p>PixelPlant</p>
+          <button onClick={ showInstructions }>ℹ️ Instructions</button>
           <div className="energy">Energy: ⚡️{ energy }</div>
-          <div className="time">Day: 🕑 { time }</div>
+          <div className="time">Day: 🕑 { time } / { SEASON }</div>
           <div className="seeds">Seeds: 🌰 { seeds }</div>
         </div>
         { renderMap() }
-        { display === 'play' ? renderActions() : `The growing season is over. Your plant dispersed ${seeds} 🌰 seeds this season.` }
+        { display === 'play' ? renderActions() : display === 'instructions' ? instructions : (<p className="end">The growing season is over. Your plant dispersed { seeds } 🌰 seeds this season.</p>) }
       </div>
     );
   }

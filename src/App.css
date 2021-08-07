@@ -10,7 +10,15 @@
 
 .infobar {
   grid-column: 1 / 3;
+  display: flex;
+  justify-content: space-around;
+  height: 2rem;
+  align-items: center;
 
+  background-color: blue;
+  color: white;
+
+  font-family: monospace;
 }
 
 .habitat {
@@ -18,8 +26,8 @@
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
 
-  width: 80vh;
-  height: 80vh;
+  height: 100%;
+  aspect-ratio: 1;
 }
 
 .habitat div {
