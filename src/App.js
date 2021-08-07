@@ -16,6 +16,8 @@ const App = () => {
   const [time, setTime] = useState(0);
   const [timer, setTimer] = useState(0);
 
+  const [readyVerbs, setReadyVerbs] = useState([]); // TODO: START HERE NEXT TIME
+
   const newGame = () => {
     // first kill the old game;
     if (timer) {
