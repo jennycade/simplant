@@ -1,29 +1,66 @@
 .App {
   text-align: center;
+  width: 100vw;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+/* Layout */
+
+.infobar {
+  grid-column: 1 / 3;
+
 }
 
 .habitat {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+
+  width: 50vw;
+  height: 50vw;
+}
+
+.habitat div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* pixel colors */
 .soil {
   background-color: brown;
+  color: brown;
 }
 .air {
   background-color: aqua;
+  color: aqua;
 }
 .shoot {
   background-color: green;
+  color: green;
 }
 .root {
   background-color: tan;
+  color: tan;
 }
 /* TODO: flowers! */
-.sun {
-  background-color: yellow;
+.bud, .flower, .fruit, .dispersed {
+  background-color: red;
+  color: red;
 }
-.water {
-  background-color: blue;
+
+.actions {
+  width: 50vw;
+  float: right;
+  clear: right;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.actions button {
+  width: min-content;
 }

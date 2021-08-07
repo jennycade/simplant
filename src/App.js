@@ -11,6 +11,7 @@ const timeStepMS = 2000;
 const App = () => {
   const [game, setGame] = useState({});
   const [map, setMap] = useState({});
+  
   const [energy, setEnergy] = useState(0);
   const [time, setTime] = useState(0);
   const [timer, setTimer] = useState(0);
@@ -38,6 +39,7 @@ const App = () => {
     // update
     setMap(gameToTick.getMap());
     setTime(gameToTick.getTime());
+    
   }
 
   const doVerb = (verb) => {
@@ -48,7 +50,6 @@ const App = () => {
       console.error(error);
     }
     
-
     // update everything
     setMap(game.getMap());
     setEnergy(game.getEnergy);
@@ -123,9 +124,11 @@ const App = () => {
   } else {
     return (
       <div className="App">
-        <button onClick={ newGame }>New Game</button>
-        <div className="energy">Energy: { energy }</div>
-        <div className="time">Day: { time }</div>
+        <div className="infobar">
+          <button onClick={ newGame }>New Game</button>
+          <div className="energy">Energy: { energy }</div>
+          <div className="time">Day: { time }</div>
+        </div>
         { renderMap() }
         { renderActions() }
       </div>
