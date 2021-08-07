@@ -125,6 +125,11 @@ const App = () => {
   }
 
   const endGame = () => {
+    // kill the game
+    if (timer) {
+      clearInterval(timer);
+    }
+    // update display
     setDisplay('end');
   }
 
