@@ -118,6 +118,12 @@ const Habitat = () => {
 
   const getResources = () => resources;
 
+  const harvestResource = (coord) => {
+    // remove resource at that coord
+    resources = resources.filter(x => ! x.getCoords().includes(coord)); // TODO: make this remove max 1 resource
+
+  }
+
   const mapCoords = () => {
 
     // plant
@@ -263,6 +269,7 @@ const Habitat = () => {
     getMaxCoord, getMidpoint, getMidline,
     getAbiotic,
     getResources,
+    harvestResource,
     tick,
     toString,
     getMap,
