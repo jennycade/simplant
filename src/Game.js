@@ -6,7 +6,7 @@ const Game = () => {
   let hab;
   let map = {};
   let coords = {};
-  let readyVerbs = [];
+  // let readyVerbs = [];
   let energy = 0;
   let seeds = 0;
   let time = 0;
@@ -16,42 +16,52 @@ const Game = () => {
     {
       verb: 'growShoots',
       cost: 20,
+      area: 'shoot',
     },
     {
       verb: 'growRoots',
       cost: 20,
+      area: 'root',
     },
     {
       verb: 'newShoot',
       cost: 10,
+      area: 'shoot',
     },
     {
       verb: 'newRoot',
       cost: 10,
+      area: 'root',
     },
     {
       verb: 'bloom',
       cost: 10,
+      area: 'shoot',
     },
     {
       verb: 'blossom',
       cost: 20,
+      area: 'flower',
     },
     {
       verb: 'fertilize',
       cost: 20,
+      area: 'flower',
     },
     {
       verb: 'fruit',
       cost: 50,
+      area: 'flower',
     },
     {
       verb: 'ripen',
       cost: 30,
+      area: 'flower',
     },
     {
       verb: 'disperse',
       cost: 10,
+      area: 'flower',
     },
   ]
 
@@ -148,7 +158,8 @@ const Game = () => {
       'bloom',
     ];
     // plus any flower verbs
-    verbs = [...verbs, hab.getFlowerVerbs()];
+    const flowerVerbs = hab.getFlowerVerbs().flat();
+    verbs = [...verbs, flowerVerbs].flat();
     
     // return verbMenu if verb in verbs
     return verbMenu.filter( x => verbs.includes(x.verb));

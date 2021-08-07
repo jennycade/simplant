@@ -30,6 +30,7 @@ const App = () => {
     setGame(newGame);
     setMap(newGame.getMap());
     setEnergy(newGame.getEnergy());
+    setReadyVerbs(newGame.getReadyVerbs());
 
     setTimer(setInterval( () => tick(newGame), timeStepMS));
   }
@@ -41,15 +42,16 @@ const App = () => {
     // update
     setMap(gameToTick.getMap());
     setTime(gameToTick.getTime());
-    
+    setReadyVerbs(gameToTick.getReadyVerbs());
+    console.log(gameToTick.getReadyVerbs());
   }
 
   const doVerb = (verb) => {
     // send it to game
     try {
-      game.doVerb(verb); // TODO: catch errors
+      game.doVerb(verb);
     } catch (error) {
-      console.error(error);
+      console.error(error); // Show errors
     }
     
     // update everything
@@ -102,11 +104,10 @@ const App = () => {
   }
 
   const renderActions = () => {
-    const verbMenu = game.getReadyVerbs();
 
     const actions = (
       <div className="actions">
-        { verbMenu.map( verb => <button key={ verb.verb } onClick={ () => doVerb(verb.verb) } >
+        { readyVerbs.map( verb => <button key={ verb.verb } onClick={ () => doVerb(verb.verb) } >
           { verb.verb } ({ verb.cost })
           </button> )}
       </div>
