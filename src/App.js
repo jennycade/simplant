@@ -43,7 +43,6 @@ const App = () => {
     setMap(gameToTick.getMap());
     setTime(gameToTick.getTime());
     setReadyVerbs(gameToTick.getReadyVerbs());
-    console.log(gameToTick.getReadyVerbs());
   }
 
   const doVerb = (verb) => {

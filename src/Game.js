@@ -158,7 +158,7 @@ const Game = () => {
       'bloom',
     ];
     // plus any flower verbs
-    const flowerVerbs = hab.getFlowerVerbs().flat();
+    const flowerVerbs = hab.getFlowerVerbs()[1]; // hab.getFlowerVerbs() returns [arr nextVerbs, arr readyVerbs]
     verbs = [...verbs, flowerVerbs].flat();
     
     // return verbMenu if verb in verbs
