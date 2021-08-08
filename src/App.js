@@ -169,10 +169,18 @@ const App = () => {
     <div className="instructions">
       <p>Welcome to Pixel Plant!</p>
       <p>It's spring, and your pixel plant seed has just sprouted.</p>
-      <p>As a plant, you need to soak up sunlight from your shoots and water from your roots to store ⚡️ energy in the form of sugar.</p>
+      <p>As a plant, you need to soak up ☀️ sunlight from your shoots and 💧 water from your roots to store ⚡️ energy in the form of sugar.</p>
       <p>Use stored ⚡️ energy to grow, bloom new 🌸 flowers, and make those flowers form 🍓 fruits and disperse 🌰 seeds.</p>
 
       <p>How many 🌰 seeds can you disperse before the end of the growing season in 200 days?</p>
+
+      <p>HINTS</p>
+      
+      <p>🌱 Click on ☀️ sunlight when it hits leaves and 💧 water when it hits roots. 🌱</p>
+      
+      <p>🌱 ​Making a ​new shoot​ or ​new root​ makes a new branch point on the plant. ​Grow​ the shoots or roots to grow from that branch. 🌱</p>
+      
+
       <button onClick={ hideInstructions }>Start growing</button>
     </div>
   );
@@ -181,7 +189,7 @@ const App = () => {
   // render
   if (display === 'new' || Object.keys(game).length === 0) { // no game
     return (
-      <div className="App">
+      <div className="newGame">
         <button onClick={ newGame }>New Game</button>
       </div>
     );
@@ -196,7 +204,7 @@ const App = () => {
           <div className="seeds">Seeds: 🌰 { seeds }</div>
         </div>
         { renderMap() }
-        { display === 'play' ? renderActions() : display === 'instructions' ? instructions : (<p className="end">The growing season is over. Your plant dispersed { seeds } 🌰 seeds this season.</p>) }
+        { display === 'play' ? renderActions() : display === 'instructions' ? instructions : (<p className="end">The growing season is over. Your plant dispersed { seeds } 🌰 seeds this season.<button onClick={ newGame }>New Game</button></p>) }
       </div>
     );
   }
